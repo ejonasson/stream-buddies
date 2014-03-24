@@ -18,17 +18,14 @@ function getValues(obj, key) {
 function addStreams(streamNames){
 	for(var i = 0; i<streamNames.length; i++)
 	{
-		var line0 = "<p>Boo!</p>";
-		var line1 = '<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" ';
-		var line2 = 'data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + streamNames[i] + '"bgcolor="#000000">';
-		var line3 = '<param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" />';
-		var line4 = '<param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />';
-		var line5 = '<param name="flashvars" value="hostname=www.twitch.tv&channel=' + streamNames[i] + '&auto_play=true&start_volume=25" />';
-		var line6 = '</object><a href="http://www.twitch.tv/' + streamNames[i] + '" style="padding:2px 0px 4px; display:block';
-		var line7 = 'width:345px; font-weight:normal; font-size:10px;text-decoration:underline; text-align:center;"></a>';
-		var wholeThing = line0 + line1 + line2 + line3+ line4 + line5 + line6 + line7;
-		$('#streamarea').append(wholeThing);
-		 console.log(wholeThing);
+		var embedCode = '<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" \
+		data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + streamNames[i] + '"bgcolor="#000000"> \
+		<param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" />  \
+		<param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /> \
+		<param name="flashvars" value="hostname=www.twitch.tv&channel=' + streamNames[i] + '&auto_play=false&start_volume=25" /> \
+		</object><a href="http://www.twitch.tv/' + streamNames[i] + '" style="padding:2px 0px 4px; display:block \
+		width:345px; font-weight:normal; font-size:10px;text-decoration:underline; text-align:center;"></a>';
+		$('#streamarea').append(embedCode);
 		}
 }
 
