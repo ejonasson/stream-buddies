@@ -43,7 +43,7 @@ function useJSON(JSON){
 
 // A function to find a user. For now just hardcoded to me.
 function findUser(){
-	var username = "spartanERK";
+	var username = "spartanerk";
 	return username;
 }
 //Function to call the API based on other input data
