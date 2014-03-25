@@ -28,7 +28,6 @@ function useJSON(JSON){
 
 	console.log(JSON);
 	var streamNames = getValues(JSON, 'name');
-	console.log(streamNames);
 	for (var i = 0; i<streamNames.length; i++){
 		showOnline(streamNames[i]);
 
@@ -62,15 +61,16 @@ function showOnline(stream){
 		dataType: 'jsonp',
 		cache: true,
 		success: function(data) {
+			console.log(data);
 			if (data.stream !== null){
-				addStream(stream);
+				addStream(stream, data);
 			}
 		}
 	});
 }
 
 // Add Stream Embeds to page
-function addStream(streamName){
+function addStream(streamName, object){
 		console.log("enterstreams");
 			console.log(streamName);
 			var streamObj = {channelName : streamName};
