@@ -81,10 +81,16 @@ function addStream(streamName, object){
 }
 
 
-
-
-// The function that is called when JSON is found
-
+function viewerCount(viewers){
+	if (viewers ==1){
+		var string = "1 viewer";
+		return string;
+	}
+	else{
+		var viewString = viewers + " viewers";
+		return viewString;
+	}
+}
 
 
 
