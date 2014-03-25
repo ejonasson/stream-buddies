@@ -73,6 +73,7 @@ function showOnline(stream){
 function addStream(streamName, object){
 		console.log("enterstreams");
 			console.log(streamName);
+			// Let's figure out how to get this object to contain everything we need from both API calls
 			var streamObj = {channelName : streamName};
 			var source = $('#streamembed').html();
 			var template = Handlebars.compile(source);
