@@ -1,11 +1,8 @@
-_.templateSettings.variable = "rc";
 var validStream = [];
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
-var template = _.template($('#testtemplate').html()
-	);
 
 // A function to find a user. For now just hardcoded to me.
 function findUser(){
@@ -76,7 +73,10 @@ function showOnline(stream){
 function addStream(streamName){
 		console.log("enterstreams");
 			console.log(streamName);
-			$('#streamarea').append(template());
+			var streamObj = {channelName : streamName};
+			var source = $('#streamembed').html();
+			var template = Handlebars.compile(source);
+			$('#streamarea').append(template(streamObj));
 		
 }
 
