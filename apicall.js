@@ -1,4 +1,5 @@
 _.templateSettings.variable = "rc";
+var validStream = [];
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
@@ -27,7 +28,7 @@ function addStreams(streamName){
 		console.log("enterstreams");
 	for (var i = 0; i<streamName.length; i++)
 		{
-			console.log(streamName);
+			console.log(streamName[i]);
 			$('#streamarea').append(template());
 		}
 }
@@ -43,8 +44,9 @@ function showOnline(stream){
 		cache: true,
 		success: function(data) {
 			if (data.stream !== null){
-			console.log(stream);
-			return stream;
+				console.log("f");
+				validStream.push(stream);
+				console.log(validStream);
 			}
 		}
 	});
@@ -60,7 +62,6 @@ function useJSON(JSON){
 	console.log(streamNames);
 	for (var i = 0; i<streamNames.length; i++){
 		showOnline(streamNames[i]);
-		console.log(validStream);
 
 	}
 	addStreams(validStream);
