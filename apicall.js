@@ -1,8 +1,11 @@
+_.templateSettings.variable = "rc";
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
-
+var template = _.template($('#testtemplate').html()
+	);
+var potato = template();
 // Function that finds the values requested in the API object
 function getValues(obj, key) {
     var objects = [];
@@ -21,16 +24,12 @@ function getValues(obj, key) {
 
 // Add Stream Embeds to page
 function addStreams(streamName){
-		/*jshint multistr: true */
-		var embedCode = '<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" \
-		data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + streamName + '"bgcolor="#000000"> \
-		<param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" />  \
-		<param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /> \
-		<param name="flashvars" value="hostname=www.twitch.tv&channel=' + streamName + '&auto_play=false&start_volume=25" /> \
-		</object><a href="http://www.twitch.tv/' + streamName + '" style="padding:2px 0px 4px; display:block \
-		width:345px; font-weight:normal; font-size:10px;text-decoration:underline; text-align:center;"></a>';
-		$('#streamarea').append(embedCode);
-		
+		console.log("enterstreams");
+	for (var i = 0; i<streamName.length; i++)
+		{
+			console.log(streamName);
+			$('#streamarea').append(template());
+		}
 }
 
 function showOnline(stream){
@@ -44,24 +43,28 @@ function showOnline(stream){
 		cache: true,
 		success: function(data) {
 			if (data.stream !== null){
-			console.log("Valid Streams:")
-			console.log(data);
-			addStreams(stream);
+			console.log(stream);
+			return stream;
 			}
 		}
 	});
 }
 
+
 // The function that is called when JSON is found
 
 function useJSON(JSON){
+
 	console.log(JSON);
 	var streamNames = getValues(JSON, 'name');
 	console.log(streamNames);
 	for (var i = 0; i<streamNames.length; i++){
-		console.log(streamNames[i]);
 		showOnline(streamNames[i]);
+		console.log(validStream);
+
 	}
+	addStreams(validStream);
+
 }
 
 // A function to find a user. For now just hardcoded to me.
