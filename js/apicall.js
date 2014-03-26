@@ -76,6 +76,9 @@ function addStream(followArray, streamObject){
 			//Check to see if this is the first stream loaded. If so, add the preview box
 			if (getFirstStreamID == streamObj.channelName){
 					changeStream(streamObj.channelName);
+					// Turn stream ID into an actual ID
+					var FirstStreamID = "#" + getFirstStreamID;
+					$(FirstStreamID).addClass('selected-stream');
 			}
 		
 }

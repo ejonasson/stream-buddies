@@ -1,11 +1,28 @@
 @import "bootstrap/bootstrap.less";
+@import "lesshat/lesshat.less";
+
+
+//Twitch Colors
+@twitch-purple: 		#6441A5;
+@twitch-light-purple: 	#B9A3E3;
+@twitch-dark-grey: 		#262626;
+@twitch-light-grey: 	#F1F1F1;
+
+html{
+	height: 100%;
+}
+body{
+	height: 100%;
+	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));
+}
 
 .stream-logo{
 	float: left;
 }
 
 .streamer{
-	background-color: red;
+	.border-radius(5px);
+	background-color: @twitch-light-grey;
 	width: 400px;
 }
 
