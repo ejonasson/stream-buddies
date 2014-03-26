@@ -8,6 +8,13 @@
 @twitch-dark-grey: 		#262626;
 @twitch-light-grey: 	#F1F1F1;
 
+
+//Colors for Stream Buttons
+
+@stream-idle: 			@twitch-light-grey;
+@stream-selected: 		darken(@twitch-light-grey, 40%);
+@stream-hover: 			darken(@twitch-light-grey, 20%);
+
 html{
 	height: 100%;
 }
@@ -17,15 +24,34 @@ body{
 }
 
 .stream-logo{
-	float: left;
 }
 
 .streamer{
+	height: 100%;
+	margin: 5px 10px 5px 10px;
+	cursor: pointer;
 	.border-radius(5px);
-	background-color: @twitch-light-grey;
+	background-color: @stream-idle;
 	width: 400px;
+	height: 100px;
+	overflow: hidden;
+
+	
+}
+.streamer:hover{
+		background-color: @stream-hover;
+}
+
+//stream button elements
+
+.stream-logo{
+	display: block;
+}
+
+.stream-viewers{
+	float: right;
 }
 
 .selected-stream{
-	background-color: blue;
+	background-color: @stream-selected;
 }
