@@ -97,11 +97,21 @@ function viewerCount(viewers){
 
 $(document).ready(function() {
 
-Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
-//todo: set timer to run this every 60 seconds. Need to either clear every time or append instead of erasing
-	followers(followsUrl);
-  });
+	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
+	//todo: set timer to run this every 60 seconds. Need to either clear every time or append instead of erasing
+		followers(followsUrl);
+	});
+	//Currently only adds class, doesn't remove from exisitng
+	$(document).on('click', '.streamer', function(){
+		console.log("click!");
+		$('.selected-stream').removeClass('selected-stream');
+		$(this).addClass("selected-stream");
+	});
+
+
 });
+
+
 
 // Function that finds the values requested in the API object - no longer needed, left in for reference
 /*

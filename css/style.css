@@ -4,4 +4,9 @@
 
 .streamer{
 	background-color: red;
+	width: 400px;
+}
+
+.selected-stream{
+	background-color: blue;
 }
