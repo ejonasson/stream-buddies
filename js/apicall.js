@@ -1,4 +1,3 @@
-var validStream = [];
 var streamCount = 0;
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
@@ -30,14 +29,14 @@ function useJSON(JSON){
 	console.log(JSON);
 	var follows = JSON.follows;
 	for (var i = 0; i<follows.length; i++){
-		var streamArray = follows[i]['channel'];
+		var streamArray = follows[i].channel;
 		showOnline(streamArray);
 	}
 
 
 }
 function showOnline(streamArray){
-	var name = streamArray['name'];
+	var name = streamArray.name;
 	var userURL = streamUrl + name;
 	console.log(userURL);
 	$.ajax({
@@ -61,12 +60,12 @@ function showOnline(streamArray){
 // Add Stream Embeds to page
 function addStream(followArray, streamObject){
 			var streamObj = {
-				channelName : followArray['name'],
-				viewerCount : viewerCount(streamObject['viewers']),
-				game		: followArray['game'],
-				status		: followArray['status'],
-				logo		: followArray['logo'],
-				display_name: followArray['display_name'],
+				channelName : followArray.name,
+				viewerCount : viewerCount(streamObject.viewers),
+				game		: followArray.game,
+				status		: followArray.status,
+				logo		: followArray.logo,
+				display_name: followArray.display_name,
 				};
 			var source = $('#stream-lister').html();
 			var template = Handlebars.compile(source);
