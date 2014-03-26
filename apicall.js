@@ -95,9 +95,10 @@ function viewerCount(viewers){
 }
 
 
-// Function to change stream (untested)
+// Function to change stream 
 function changeStream(streamer){
 	//But don't cross them!
+	// We only need to send the channelName in order to embed the stream. If we ever add more to this area, we need to add more variables.
 	var source = $('#stream-embed').html();
 	var channel = {
 		channelName : streamer,
@@ -116,9 +117,6 @@ $(document).ready(function() {
 		followers(followsUrl);
 
 	});
-
-
-	var firstStream = 
 	//Currently only adds class, doesn't remove from exisitng
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
