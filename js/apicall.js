@@ -38,7 +38,6 @@ function useJSON(JSON){
 function showOnline(streamArray){
 	var name = streamArray.name;
 	var userURL = streamUrl + name;
-	console.log(userURL);
 	$.ajax({
 		url: userURL,
 		type: 'GET',
@@ -46,7 +45,6 @@ function showOnline(streamArray){
 		dataType: 'jsonp',
 		cache: true,
 		success: function(data) {
-			console.log(data);
 			if (data.stream !== null){
 				addStream(streamArray, data.stream);
 				streamCount++;
