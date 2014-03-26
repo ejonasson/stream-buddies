@@ -36,6 +36,7 @@ function useJSON(JSON){
 
 }
 function showOnline(streamArray){
+	var streamCount = 0;
 	var name = streamArray['name'];
 	var userURL = streamUrl + name;
 	console.log(userURL);
@@ -49,9 +50,15 @@ function showOnline(streamArray){
 			console.log(data);
 			if (data.stream !== null){
 				addStream(streamArray, data.stream);
+				streamCount++;
 			}
 		}
 	});
+	if (streamCount === 0){
+		// Function to run if no streams are found.
+		console.log("No Streams Online");
+	}
+
 }
 
 // Add Stream Embeds to page
@@ -65,8 +72,8 @@ function addStream(followArray, streamObject){
 				viewerCount : viewerCount(streamObject['viewers']),
 				game		: followArray['game'],
 				status		: followArray['status'],
-				logo		: streamObject['channel']['logo'],
-
+				logo		: followArray['logo'],
+				display_name: followArray['display_name'],
 				};
 			var source = $('#streamembed').html();
 			var template = Handlebars.compile(source);

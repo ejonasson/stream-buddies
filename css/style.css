@@ -1,3 +1,7 @@
-h1{
+.stream-logo{
+	float: left;
+}
+
+.streamer{
 	background-color: red;
 }
