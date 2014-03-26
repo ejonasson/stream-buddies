@@ -1,6 +1,15 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
-    
+  uglify: {
+    options: {
+      mangle: false
+    },
+    my_target: {
+      files: {
+        'js/main.min.js': ['js/apicall.js']
+      }
+    }
+  },
     less: {
       development: {
         options: {
@@ -18,7 +27,7 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files :['js/*.js'],
-
+        tasks: ['uglify']
       },
       styles: {
         // Which files to watch (all .less files recursively in the less directory)
@@ -30,7 +39,7 @@ module.exports = function(grunt) {
       }
     }
   });
- 
+   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('default', ['watch']);
