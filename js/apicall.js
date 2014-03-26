@@ -70,10 +70,9 @@ function addStream(followArray, streamObject){
 				};
 			var source = $('#stream-lister').html();
 			var template = Handlebars.compile(source);
-			// Has to be 2 right now, should fix
 			$('#streamer-list').append(template(streamObj));
 			// To do: make which stream is featured somewhat more random
-			var getFirstStreamID = $( "#streamer-list > :nth-child(2)").attr('id');
+			var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
 
 			//Check to see if this is the first stream loaded. If so, add the preview box
 			if (getFirstStreamID == streamObj.channelName){

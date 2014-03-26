@@ -6,24 +6,26 @@
 	<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div id="stream-area">
-	<!-- currently this is required by the stream init function to be the first div - should fix later -->
 	<script type="text/template" id="stream-embed">
-		<div class="streambox">
-			<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=false&start_volume=25" /></object>
-		</div>
-	</script>
+	<div class="streambox">
+	<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=false&start_volume=25" /></object>
 	</div>
-	<div id = "streamer-list">
+	</script>
+	<div id="stream-area">	
+			<!--Template from above prints here-->
+	</div>
 
 	<script type="text/template" id="stream-lister">
-			<div class="streamer" id={{channelName}}>
-				<div class="stream-logo"><img src={{logo}} height=100 width=100></div>
-				<div class="display-name"><h2>{{display_name}}</h2></div>
-				<div class="stream-viewers"><p>{{viewerCount}}</p></div>
-				<div class="stream-game">Currently playing: {{game}}</div>
-			</div>
+		<div class="streamer" id={{channelName}}>
+		<div class="stream-logo"><img src={{logo}} height=100 width=100></div>
+		<div class="display-name"><h2>{{display_name}}</h2></div>
+		<div class="stream-viewers"><p>{{viewerCount}}</p></div>
+		<div class="stream-game">Currently playing: {{game}}</div>
+		</div>
 	</script>
+	<div id = "streamer-list">
+	<!--Template from above prints here-->
+
 	</div>
 
 
