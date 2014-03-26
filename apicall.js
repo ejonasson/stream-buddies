@@ -56,7 +56,7 @@ function showOnline(streamArray){
 
 // Add Stream Embeds to page
 function addStream(followArray, streamObject){
-			console.log("followArray:"); 
+			console.log("followArray:");
 			console.log(followArray);
 			console.log("Streamobject ");
 			console.log(streamObject);
@@ -67,7 +67,7 @@ function addStream(followArray, streamObject){
 				status		: followArray['status'],
 				logo		: streamObject['channel']['logo'],
 
-				}
+				};
 			var source = $('#streamembed').html();
 			var template = Handlebars.compile(source);
 			$('#streamarea').append(template(streamObj));
