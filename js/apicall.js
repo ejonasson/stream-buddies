@@ -49,6 +49,9 @@ function showOnline(streamArray){
 				addStream(streamArray, data.stream);
 				streamCount++;
 			}
+			else{
+				$('#offline-list').append(name + " ");
+			}
 		}
 	});
 

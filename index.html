@@ -8,7 +8,7 @@
 <body>
 	<header>
 		<div class="container">
-		<h1>TwitchBuddies(working Title)<br><small>TwitchBuddies(working Title) is designed to make it easy to watch the streams you follow on Twitch - or check out the streams your friends follow.</small></h1>
+		<h1>TwitchBuddies(working Title)<br><small>TwitchBuddies(working Title) is designed to make it easy to watch the streams you follow on Twitch</small></h1>
 		</div>
 	</header>
 	<div class="container">
@@ -28,7 +28,7 @@
 	
 			</div>
 			<div class="col-md-4">
-
+				<h2 class="online-offline">Currently Online:</h2>
 				<script type="text/template" id="stream-lister">
 				<div class="streamer" id={{channelName}}>
 				<img class=""stream-logo"" align=left src={{logo}} height=100 width=100>
@@ -42,6 +42,10 @@
 				<div id = "streamer-list">
 					<!--Template from above prints here-->
 
+				</div>
+
+				<div id="offline-list" class="online-offline">
+				<h2>Currently Offline:</h2>
 				</div>
 			</div>
 		</div>
