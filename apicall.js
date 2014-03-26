@@ -1,4 +1,5 @@
 var validStream = [];
+var streamCount = 0;
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
@@ -31,12 +32,11 @@ function useJSON(JSON){
 	for (var i = 0; i<follows.length; i++){
 		var streamArray = follows[i]['channel'];
 		showOnline(streamArray);
-
 	}
+
 
 }
 function showOnline(streamArray){
-	var streamCount = 0;
 	var name = streamArray['name'];
 	var userURL = streamUrl + name;
 	console.log(userURL);
@@ -54,19 +54,12 @@ function showOnline(streamArray){
 			}
 		}
 	});
-	if (streamCount === 0){
-		// Function to run if no streams are found.
-		console.log("No Streams Online");
-	}
+
 
 }
 
 // Add Stream Embeds to page
 function addStream(followArray, streamObject){
-			console.log("followArray:");
-			console.log(followArray);
-			console.log("Streamobject ");
-			console.log(streamObject);
 			var streamObj = {
 				channelName : followArray['name'],
 				viewerCount : viewerCount(streamObject['viewers']),
@@ -75,9 +68,17 @@ function addStream(followArray, streamObject){
 				logo		: followArray['logo'],
 				display_name: followArray['display_name'],
 				};
-			var source = $('#streamembed').html();
+			var source = $('#stream-lister').html();
 			var template = Handlebars.compile(source);
-			$('#streamarea').append(template(streamObj));
+			// Has to be 2 right now, should fix
+			$('#streamer-list').append(template(streamObj));
+			// To do: make which stream is featured somewhat more random
+			var getFirstStreamID = $( "#streamer-list > :nth-child(2)").attr('id');
+
+			//Check to see if this is the first stream loaded. If so, add the preview box
+			if (getFirstStreamID == streamObj.channelName){
+					changeStream(streamObj.channelName);
+			}
 		
 }
 
@@ -94,18 +95,36 @@ function viewerCount(viewers){
 }
 
 
+// Function to change stream (untested)
+function changeStream(streamer){
+	//But don't cross them!
+	var source = $('#stream-embed').html();
+	var channel = {
+		channelName : streamer,
+	};
+	var template = Handlebars.compile(source);
+	$('#stream-area').html(template(channel));
+}
+
+
+
 
 $(document).ready(function() {
 
 	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
 	//todo: set timer to run this every 60 seconds. Need to either clear every time or append instead of erasing
 		followers(followsUrl);
+
 	});
+
+
+	var firstStream = 
 	//Currently only adds class, doesn't remove from exisitng
 	$(document).on('click', '.streamer', function(){
-		console.log("click!");
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
+		var streamerID = this.getAttribute('id');
+		changeStream(streamerID);
 	});
 
 
