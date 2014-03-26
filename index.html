@@ -6,6 +6,11 @@
 	<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
+	<header>
+		<div class="container">
+		<h1>TwitchBuddies(working Title)<br><small>TwitchBuddies(working Title) is designed to make it easy to watch the streams you follow on Twitch - or check out the streams your friends follow.</small></h1>
+		</div>
+	</header>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
@@ -22,14 +27,16 @@
 				</div>
 	
 			</div>
-			<div class="col-md-4 pull-left">
+			<div class="col-md-4">
 
 				<script type="text/template" id="stream-lister">
 				<div class="streamer" id={{channelName}}>
-				<div class="stream-logo"><img align=left src={{logo}} height=100 width=100></div>
-				<div class="display-name"><h2>{{display_name}}</h2></div>
-				<div class="stream-viewers"><p>{{viewerCount}}</p></div>
-				<div class="stream-game">Currently playing: {{game}}</div>
+				<img class=""stream-logo"" align=left src={{logo}} height=100 width=100>
+				<div class="stream-meta">
+					<h2 class="display-name">{{display_name}}</h2>
+					<p class= "stream-viewers">{{viewerCount}}</p>
+					<strong class="stream-game">{{game}}</strong>
+				</div>
 				</div>
 				</script>
 				<div id = "streamer-list">

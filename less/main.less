@@ -12,16 +12,45 @@
 //Colors for Stream Buttons
 
 @stream-idle: 			@twitch-light-grey;
-@stream-selected: 		darken(@twitch-light-grey, 40%);
+@stream-selected: 		darken(@twitch-light-grey, 30%);
 @stream-hover: 			darken(@twitch-light-grey, 20%);
+@stream-padding-left: 	5px;
+
+@stream-grad-beg: 		#e2e2e2;
+@stream-grad-mid: 		#d1d1d1;
+@stream-grad-end: 		#fefefe;
+
+@selected-stream-grad-beg: darken(@stream-grad-beg, 30%);
+@selected-stream-grad-mid: darken(@stream-grad-mid, 30%);
+@selected-stream-grad-end: darken(@stream-grad-end, 30%);
+
+@hover-stream-grad-beg: darken(@stream-grad-beg, 10%);
+@hover-stream-grad-mid: darken(@stream-grad-mid, 10%);
+@hover-stream-grad-end: darken(@stream-grad-end, 10%);
 
 html{
 	height: 100%;
 }
 body{
+
 	height: 100%;
 	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));
 }
+
+header{
+	margin: 0;
+	padding: 0;
+	color: @twitch-light-grey;
+	background-color: black;
+	h1{
+		margin-top: 0;
+		small{
+			font-size: ceil(@font-size-h1 * .5);
+		}
+	}
+
+}
+
 
 .stream-logo{
 }
@@ -29,31 +58,40 @@ body{
 .streamer{
 	width: 400px;
 	height: 100px;
-	padding: 5px 10px 5px 10px;
 	margin: 10px 20px 10px 20px;
 	cursor: pointer;
 	.border-radius(5px);
-	background-color: @stream-idle;
+	//background-color: @stream-idle;
+	.background-image(linear-gradient(top, @stream-grad-beg 0%, @stream-grad-mid 55%, @stream-grad-end 100%));
 	overflow: hidden;
-	h2{
-		margin: 0;
-		padding: 0;
-	}
 	
 }
 .streamer:hover{
-		background-color: @stream-hover;
+	.background-image(linear-gradient(top, @hover-stream-grad-beg 0%, @hover-stream-grad-mid 55%, @hover-stream-grad-end 100%));
 }
 
 //stream button elements
 
 .stream-logo{
 	display: block;
+	float: left;
 }
 
 .stream-viewers{
+	float: right;
+	padding-right: 5px;
+	padding-left: @stream-padding-left;
 	}
+.stream-game{
+	padding-left: @stream-padding-left;
+}
+
+.display-name{
+	margin: 0;
+	padding: 0;
+	padding-left: @stream-padding-left;
+}
 
 .selected-stream{
-	background-color: @stream-selected;
+	.background-image(linear-gradient(top, @selected-stream-grad-beg 0%, @selected-stream-grad-mid 55%, @selected-stream-grad-end 100%));
 }
