@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+    
     less: {
       development: {
         options: {
@@ -9,11 +10,16 @@ module.exports = function(grunt) {
         },
         files: {
           // target.css file: source.less file
-          "css/main.css": "less/main.less"
+          'css/main.css': ['less/main.less']
         }
       }
     },
+
     watch: {
+      scripts: {
+        files :['js/*.js'],
+
+      },
       styles: {
         // Which files to watch (all .less files recursively in the less directory)
         files: ['less/**/*.less'],
@@ -27,6 +33,5 @@ module.exports = function(grunt) {
  
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
- 
   grunt.registerTask('default', ['watch']);
 };
