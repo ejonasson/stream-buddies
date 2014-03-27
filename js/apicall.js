@@ -29,6 +29,7 @@ function useJSON(JSON){
 function showOnline(streamArray){
 	var name = streamArray.name;
 	var userURL = streamUrl + name;
+	var streamViewers = 0;
 	//reset stream list for new import
 	$.ajax({
 		url: userURL,
@@ -38,7 +39,9 @@ function showOnline(streamArray){
 		cache: true,
 		success: function(data) {
 			if (data.stream !== null){
-				addStream(streamArray, data.stream);
+				console.log(data.stream);
+				streamViewers = data.stream['viewers'];
+				addStream(streamArray, streamViewers);
 				streamCount++;
 			}
 			else{
@@ -51,15 +54,16 @@ function showOnline(streamArray){
 }
 
 // Add Stream Embeds to page
-function addStream(followArray, streamObject){
+function addStream(followArray, streamViewers){
 	var streamObj = {
 		channelName : followArray.name,
-		viewerCount : viewerCount(streamObject.viewers),
+		viewerCount : viewerCount(streamViewers),
 		game		: followArray.game,
 		status		: followArray.status,
 		logo		: followArray.logo,
 		display_name: followArray.display_name,
 	};
+	console.log(followArray);
 	var source = $('#stream-lister').html();
 	var template = Handlebars.compile(source);
 	$('#streamer-list').append(template(streamObj));
@@ -144,3 +148,8 @@ $(document).ready(function() {
 
 
 });
+
+
+function sortArray(){
+
+}
