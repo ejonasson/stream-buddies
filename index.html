@@ -8,14 +8,14 @@
 <body>
 	<header>
 		<div class="container">
-		<h1>TwitchBuddies(working Title)<br><small>TwitchBuddies(working Title) is designed to make it easy to watch the streams you follow on Twitch</small></h1>
+		<h1>StreamBuddies<br><small>StreamBuddies is designed to make it easy to watch the streams you follow on Twitch</small></h1>
 		</div>
 	</header>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
 				<script type="text/template" id="stream-embed">
-				<h2>{{channelName}}</h2>
+				<h2>{{display_name}}</h2>
 				<div class="streambox">
 				<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=false&start_volume=25" /></object>
 				</div>
@@ -24,9 +24,14 @@
 				</div>
 				</script>
 				<div id="stream-area">	
-				<h2>Streams are loading...</h2>
+				<h2 id = "header-message">Streams are loading...</h2>
 
 					<!--Template from above prints here-->
+				<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=nostreamloaded" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=nostreamloaded&auto_play=false&start_volume=25" /></object>
+				<div class="stream-chat">
+				<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=nostreamloaded&popout_chat=true" height="335" width="620"></iframe>
+				</div>
+
 				</div>
 	
 			</div>

@@ -8,9 +8,9 @@ var showingStream = false;
 
 // Putting any language we need to pass up here for easier reference
 
-var notFound = "<h2>No Online Streams were found.</h2>";
-var error = "<h2>Twitch is taking longer than expected to respond. If this persists, try refreshing your browser.</h2>";
-var invalidUser = "<h2>Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.</h2>";
+var notFound = "No Online Streams were found.";
+var error = "Twitch is taking longer than expected to respond.  Try refreshing your browser.";
+var invalidUser = "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.";
 
 // get Query Variables. Code courtesy of CSS Tricks
 function getQueryVariable(variable)
@@ -121,12 +121,13 @@ function addStream(followArray, streamData){
 		}
 		if(!showingStream)
 		{
+			var FirstOnlineStreamID = "#" + getFirstStreamID;
 			showingStream = true;
 			changeStream(streamObj.channelName);
+			$(FirstOnlineStreamID).addClass('selected-stream');
 		}
 		// Turn stream ID into an actual ID
-		var FirstOnlineStreamID = "#" + getFirstStreamID;
-		$(FirstOnlineStreamID).addClass('selected-stream');
+
 
 	}
 	
@@ -168,11 +169,11 @@ function noStreams(){
 
 	if (!showingStream){
 		if (offlineStreams.length > 0){
-			$('#stream-area').html(notFound);
+			$('#header-message').html(notFound);
 		}
 		else{
 			console.log(loadedStreams);
-			$('#stream-area').html(error);
+			$('#header-message').html(error);
 
 		}
 	}
@@ -196,7 +197,7 @@ $(document).ready(function() {
 			success: function(data) {
 				console.log(data);
 				if(data.status === 404){
-					$('#stream-area').html(invalidUser);
+					$('#header-message').html(invalidUser);
 					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
 					showingStream = true;
 					return false;
@@ -212,14 +213,30 @@ $(document).ready(function() {
 	//Currently only adds, need a good way to subtract
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
-	setInterval(queryTwitch, 60000);
-	setTimeout(noStreams, 5000);
+	setInterval(queryTwitch, 100000);
+	setTimeout(noStreams, 3000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
 		var streamerID = this.getAttribute('id');
 		changeStream(streamerID);
 	});
+//TODO: Rework function so that api calls and loading streams are asynchronous. That could be faster/cleaner.
 
 
 });
+
+function loadStreamFromObject() {
+	for (var i in loadedStreams){
+		if (!loadedStreams.i.already_loaded)
+		{
+			//Don't Load Streams
+		}
+		else{
+			//Load Streams
+			loadedStreams.i.already_loaded = true;
+		}
+	}
+}
+
+
