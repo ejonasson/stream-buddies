@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>StreamBuddies - Easily Watch and Share Twitch Streams</title>
 	<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<header>
@@ -13,7 +14,7 @@
 	</header>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-lg-7">
 				<script type="text/template" id="stream-embed">
 				<h2>{{display_name}}</h2>
 				<div class="streambox">
@@ -35,16 +36,15 @@
 				</div>
 	
 			</div>
-			<div class="col-md-5">
+			<div class="col-lg-5">
 				<div class="streamer-list">
 					<h2 class="online-offline">Currently Online:</h2>
 					<script type="text/template" id="stream-lister">
 					<div class="streamer" id={{channelName}}>
-						<img class="stream-logo" align=left src={{logo}} height=100 width=100>
+						<img class="stream-logo" align=left src={{logo}} height=50 width=50>
 						<div class="stream-meta">
-							<h2 class="display-name">{{display_name}}</h2>
-							<p class= "stream-viewers">{{viewerCount}}</p>
-							<strong class="stream-game">{{game}}</strong>
+							<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
+							<p class="stream-status">{{status}}</p>
 						</div>
 					
 					</div>

@@ -57,14 +57,14 @@ header{
 }
 
 .streamer{
-	width: 400px;
-	height: 100px;
-	margin: 10px 20px 10px 20px;
+	width: 450px;
+	height: 50px;
 	cursor: pointer;
-	.border-radius(5px);
-	//background-color: @stream-idle;
-	.background-image(linear-gradient(top, @stream-grad-beg 0%, @stream-grad-mid 55%, @stream-grad-end 100%));
+	background-color: @stream-idle;
 	overflow: hidden;
+		h2{
+		font-size: 20px;
+	}
 	
 }
 .streamer:hover{
@@ -84,25 +84,27 @@ header{
 .stream-logo{
 	display: block;
 	float: left;
+	margin-right: 10px;
 }
 
 .stream-viewers{
 	float: right;
-	padding-right: 5px;
-	padding-left: @stream-padding-left;
+	font-size: 14pt;
 	}
-.stream-game{
-	padding-left: @stream-padding-left;
+.stream-status{
+	font-size: 14px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .display-name{
 	margin: 0;
 	padding: 0;
-	padding-left: @stream-padding-left;
+	width: 100%;
 }
 
 .selected-stream{
-	.background-image(linear-gradient(top, @selected-stream-grad-beg 0%, @selected-stream-grad-mid 55%, @selected-stream-grad-end 100%));
 }
 
 .online-offline{
@@ -111,10 +113,12 @@ header{
 }
 
 .streamer-list{
+	height: 100%;
 	background-color: @twitch-dark-grey;
 	.border-bottom-left-radius(5px);
-	.border-bottom-right-radius;
-	padding: 20px 20px 20px 20px;
-	min-width: 450px;
+	.border-bottom-right-radius(5px);
+	padding: 20px 0px 20px 0px;
+	width: 450px;
+	overflow: hidden;
 
 }
