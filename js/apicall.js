@@ -40,8 +40,7 @@ function showOnline(streamArray){
 		async: false,
 		success: function(data) {
 			if (data.stream !== null){
-				streamViewers = data.stream['viewers'];
-				addStream(streamArray, streamViewers);
+				addStream(streamArray, data);
 			}
 			else{
 				var inList = false;
@@ -62,7 +61,7 @@ function showOnline(streamArray){
 }
 
 // Add Stream Embeds to page
-function addStream(followArray, streamViewers){
+function addStream(followArray, streamData){
 	function checkIfLoaded() {
 		for (var i = 0; i<loadedStreams.length; i++){
 			if (loadedStreams[i].channelName === followArray.name){
@@ -77,7 +76,7 @@ function addStream(followArray, streamViewers){
 	var streamObj = {
 		 
 			channelName : followArray.name,
-			viewerCount : viewerCount(streamViewers),
+			viewerCount : viewerCount(streamData['stream']['viewers']),
 			game		: followArray.game,
 			status		: followArray.status,
 			logo		: followArray.logo,
@@ -165,10 +164,12 @@ $(document).ready(function() {
 		});
 	});
 	}
+
+	//Currently only adds, need a good way to subtract
+	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 60000);
 	
-	//Currently only adds class, doesn't remove from exisitng
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
