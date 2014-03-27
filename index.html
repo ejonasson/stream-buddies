@@ -15,6 +15,7 @@
 		<div class="row">
 			<div class="col-md-7">
 				<script type="text/template" id="stream-embed">
+				<h2>{{channelName}}</h2>
 				<div class="streambox">
 				<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=false&start_volume=25" /></object>
 				</div>
@@ -23,20 +24,22 @@
 				</div>
 				</script>
 				<div id="stream-area">	
+				<h2>Streams are loading...</h2>
+
 					<!--Template from above prints here-->
 				</div>
 	
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<h2 class="online-offline">Currently Online:</h2>
 				<script type="text/template" id="stream-lister">
 				<div class="streamer" id={{channelName}}>
-				<img class="stream-logo" align=left src={{logo}} height=100 width=100>
-				<div class="stream-meta">
-					<h2 class="display-name">{{display_name}}</h2>
-					<p class= "stream-viewers">{{viewerCount}}</p>
-					<strong class="stream-game">{{game}}</strong>
-				</div>
+					<img class="stream-logo" align=left src={{logo}} height=100 width=100>
+					<div class="stream-meta">
+						<h2 class="display-name">{{display_name}}</h2>
+						<p class= "stream-viewers">{{viewerCount}}</p>
+						<strong class="stream-game">{{game}}</strong>
+					</div>
 				</div>
 				</script>
 				<div id = "streamer-list">

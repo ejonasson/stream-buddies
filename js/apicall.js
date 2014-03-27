@@ -5,7 +5,6 @@ var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
 var showingStream = false;
-// A function to find a user. For now just hardcoded to me.
 
 // get Query Variables. Code courtesy of CSS Tricks
 function getQueryVariable(variable)
@@ -22,7 +21,7 @@ function findUser(){
 	var username = "spartanerk";
 	var queryname = getQueryVariable("name");
 	if (queryname){
-		return queryname
+		return queryname;
 	}
 	return username;
 }
@@ -106,7 +105,7 @@ function addStream(followArray, streamData){
 		var source = $('#stream-lister').html();
 		var template = Handlebars.compile(source);
 		var thisStream = streamObj;
-		loadedStreams.push(streamObj)
+		loadedStreams.push(streamObj);
 		console.log(loadedStreams);
 		$('#streamer-list').append(template(thisStream));
 
@@ -117,15 +116,15 @@ function addStream(followArray, streamData){
 			// Turn stream ID into an actual ID
 			var FirstStreamID = "#" + getFirstStreamID;
 			$(FirstStreamID).addClass('selected-stream');
-		}				
+		}
 		if(!showingStream)
 		{
 			showingStream = true;
 			changeStream(streamObj.channelName);
 		}
 		// Turn stream ID into an actual ID
-		var FirstStreamID = "#" + getFirstStreamID;
-		$(FirstStreamID).addClass('selected-stream');
+		var FirstOnlineStreamID = "#" + getFirstStreamID;
+		$(FirstOnlineStreamID).addClass('selected-stream');
 
 	}
 	
@@ -148,13 +147,17 @@ function viewerCount(viewers){
 // Function to change stream 
 function changeStream(streamer){
 	//But don't cross them!
-	// We only need to send the channelName in order to embed the stream. If we ever add more to this area, we need to add more variables.
+	// Since we have the streamObject already loaded at this point, we can just compare the id to that and load it
 	var source = $('#stream-embed').html();
-	var channel = {
-		channelName : streamer,
-	};
 	var template = Handlebars.compile(source);
-	$('#stream-area').html(template(channel));
+// Get loaded stream object
+	for (var i in loadedStreams){
+		if (loadedStreams[i]['channelName'] === streamer){
+				var streamObj = loadedStreams[i];
+				$('#stream-area').html(template(streamObj));
+
+		}
+	}
 }
 
 
@@ -185,7 +188,7 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 60000);
-	
+	setTimeout(noStreams, 5000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
@@ -196,7 +199,18 @@ $(document).ready(function() {
 
 });
 
+//Trigger if we fail to find streams
+function noStreams(){
+	var notFound = "<h2>No Online Streams were found.</h2>";
+	var error = "<h2>Some kind of error has occurred. Try refreshing your browser to load your streams.</h2>";
+	if (!showingStream){
+		if (loadedStreams.length == 0){
+			$('#stream-area').html(notFound);
+		}
+		else{
+			console.log(loadedStreams);
+			$('#stream-area').html(error);
 
-function sortArray(){
-
+		}
+	}
 }
