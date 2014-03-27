@@ -6,6 +6,12 @@ var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
 var showingStream = false;
 
+// Putting any language we need to pass up here for easier reference
+
+var notFound = "<h2>No Online Streams were found.</h2>";
+var error = "<h2>Twitch is taking longer than expected to respond. If this persists, try refreshing your browser.</h2>";
+var invalidUser = "<h2>Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.</h2>";
+
 // get Query Variables. Code courtesy of CSS Tricks
 function getQueryVariable(variable)
 {
@@ -27,10 +33,6 @@ function findUser(){
 }
 
 //Function to call the API based on other input data
-function followers(theURL){
-
-}
-
 function useJSON(JSON){
 
 	var follows = JSON.follows;
@@ -161,6 +163,20 @@ function changeStream(streamer){
 }
 
 
+//Trigger if we fail to find streams
+function noStreams(){
+
+	if (!showingStream){
+		if (offlineStreams.length > 0){
+			$('#stream-area').html(notFound);
+		}
+		else{
+			console.log(loadedStreams);
+			$('#stream-area').html(error);
+
+		}
+	}
+}
 
 $(document).ready(function() {
 	function queryTwitch(){
@@ -175,9 +191,18 @@ $(document).ready(function() {
 			dataType: 'jsonp',
 			cache: true,
 			async: false,
+			error: function(){
+			},
 			success: function(data) {
-				console.log("success");
+				console.log(data);
+				if(data.status === 404){
+					$('#stream-area').html(invalidUser);
+					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
+					showingStream = true;
+					return false;
+				}
 				useJSON(data);
+
 			},
 
 		});
@@ -198,19 +223,3 @@ $(document).ready(function() {
 
 
 });
-
-//Trigger if we fail to find streams
-function noStreams(){
-	var notFound = "<h2>No Online Streams were found.</h2>";
-	var error = "<h2>Some kind of error has occurred. Try refreshing your browser to load your streams.</h2>";
-	if (!showingStream){
-		if (loadedStreams.length == 0){
-			$('#stream-area').html(notFound);
-		}
-		else{
-			console.log(loadedStreams);
-			$('#stream-area').html(error);
-
-		}
-	}
-}
