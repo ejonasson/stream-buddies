@@ -51,7 +51,6 @@ function showOnline(streamArray){
 		contentType: 'application/json',
 		dataType: 'jsonp',
 		cache: true,
-		async: false,
 		success: function(data) {
 			var streamObj = {
 
@@ -61,31 +60,14 @@ function showOnline(streamArray){
 			status		: streamArray.status,
 			logo		: streamArray.logo,
 			display_name: streamArray.display_name,
-			already_loaded: checkIfLoaded(streamArray.name),
 			online     :  false,
+			already_loaded: false
 		};
 
 			if (data.stream !== null){
 				streamObj.online = true;
 			}
 			addStream(streamObj);
-/*
-			else{
-				var inList = false;
-				for (var i in offlineStreams){
-					if (offlineStreams[i] === name){
-						inList = true;
-					}
-				}
-				if (!inList){
-					var source = $('#offline-stream-lister').html();
-					var template = Handlebars.compile(source);
-					$('#offline-list').append(template(streamArray));
-					offlineStreams.push(name);
-				}
-
-			}
-*/
 		}
 	});
 }
@@ -94,19 +76,17 @@ function showOnline(streamArray){
 
 // Add Stream Embeds to page
 function addStream(streamObj){
-	if (streamObj.already_loaded){
-		// update stream object with new data
-		for (var i in loadedStreams){
-			if (loadedStreams[i].name === streamObj.name){
-				loadedStreams[i] = streamObj;
-				loadedStreams[i].already_loaded = true;
-			}
+	var loaded = false;
+	for (var i in loadedStreams){
+		if (loadedStreams[i].channelName === streamObj.channelName){
+			streamObj.already_loaded = true;
+			loadedStreams[i] = streamObj;
+			loaded = true;
 		}
 	}
-	else{
-		loadedStreams.push(streamObj);
+	if(!loaded){
+		loadedStreams.push(streamObj);	
 	}
-	
 }
 
 function loadStreamFromObject() {
@@ -121,7 +101,7 @@ function loadStreamFromObject() {
 			var source = $('#stream-lister').html();
 			var template = Handlebars.compile(source);
 			var thisStream = loadedStreams[i];
-			if (loadedStreams[i]['online'] === true){
+			if (loadedStreams[i]['online']){
 				$('#streamer-list').append(template(thisStream));
 				loadFirstStream(loadedStreams[i]);
 			}
@@ -135,14 +115,10 @@ function loadStreamFromObject() {
 }
 
 function loadFirstStream(streamObj){
-			// To do: make which stream is featured somewhat more random
-			var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
-			if (getFirstStreamID == streamObj.channelName){
-				changeStream(streamObj.channelName);
-			// Turn stream ID into an actual ID
-			var FirstStreamID = "#" + getFirstStreamID;
-			$(FirstStreamID).addClass('selected-stream');
-		}
+	// To do: make which stream is featured somewhat more random
+	var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
+	if (getFirstStreamID == streamObj.channelName){
+		// Turn stream ID into an actual ID
 		if(!showingStream)
 		{
 			var FirstOnlineStreamID = "#" + getFirstStreamID;
@@ -151,7 +127,7 @@ function loadFirstStream(streamObj){
 			$(FirstOnlineStreamID).addClass('selected-stream');
 		}
 	}
-
+}
 
 // Function to change stream 
 function changeStream(streamer){
@@ -224,7 +200,7 @@ function findUser(){
 
 //Function to call the API based on other input data
 function useJSON(JSON){
-
+	console.log(JSON);
 	var follows = JSON.follows;
 	for (var i = 0; i<follows.length; i++){
 		var streamArray = follows[i].channel;
@@ -232,16 +208,6 @@ function useJSON(JSON){
 	}
 }
 
-function checkIfLoaded(name) {
-	for (var i = 0; i<loadedStreams.length; i++){
-		if (loadedStreams[i].channelName === name){
-			return true;
-		}
-		else{
-		}
-	}
-	return false;
-}
 
 // Make sure viewer count is appropriately singular or plural
 function viewerCount(data){
