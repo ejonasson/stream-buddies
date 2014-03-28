@@ -1,75 +1,75 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>StreamBuddies - Easily Watch and Share Twitch Streams</title>
-	<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+<meta charset="UTF-8">
+<title>StreamBuddies - Easily Watch and Share Twitch Streams</title>
+<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<header>
-		<div class="container">
-			<h1>StreamBuddies<br><small>StreamBuddies is designed to make it easy to watch the streams you follow on Twitch</small></h1>
-		</div>
-	</header>
-			<div id="stream-window">
-				<script type="text/template" id="stream-embed">
-					<h2>{{display_name}}</h2>
-					<div class="streambox">
-						<object type="application/x-shockwave-flash" style="height:378px; width:620px;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=false&start_volume=25" /></object>
-					</div>
-					<div class="stream-chat">
-						<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel={{channelName}}&popout_chat=true" style = "height:335px; width: 620px;"></iframe>
-					</div>
-				</script>
-				<div id="stream-area">	
-					<h2 id = "header-message">Streams are loading...</h2>
+<header>
+	<div class="container">
+		<h1>StreamBuddies<br><small>StreamBuddies is designed to make it easy to watch the streams you follow on Twitch</small></h1>
+	</div>
+</header>
+<script type="text/template" id="stream-embed">
+	<div class="streambox">
+		<h2>{{display_name}}</h2>
+		<object type="application/x-shockwave-flash" style="height:378px; width:620px;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=false&start_volume=25" /></object>
+	</div>
+	<div class="stream-chat">
+		<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel={{channelName}}&popout_chat=true" style = "height:335px; width: 620px;"></iframe>
+	</div>
+</script>
+<div id="stream-area">
+	<div class="stream-box">	
+		<h2 id = "header-message">Streams are loading...</h2>
+				<!--Template from above prints here-->
+		<object type="application/x-shockwave-flash" style="height:378px; width:620px;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=nostreamloaded" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=nostreamloaded&auto_play=false&start_volume=25" /></object>
 
-					<!--Template from above prints here-->
-					<object type="application/x-shockwave-flash" style="height:378px; width:620px;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=nostreamloaded" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=nostreamloaded&auto_play=false&start_volume=25" /></object>
-					<div class="stream-chat">
-						<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=nostreamloaded&popout_chat=true" style = "height:335px; width: 620px;"></iframe>
-					</div>
+	</div>
+</div>
 
-				</div>
+<div class="stream-chat">
+	<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=nostreamloaded&popout_chat=true" style = "height:335px; width: 320px;"></iframe>
+</div>
 
+<div class="streamer-list">
+	<h2 class="online-offline">Online</h2>
+	<script type="text/template" id="stream-lister">
+		<div class="streamer" id={{channelName}}>
+			<img class="stream-logo" align=left src={{logo}} height=50 width=50>
+			<div class="stream-meta">
+				<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
+				<p class="stream-status">{{status}}</p>
 			</div>
-	<div class="streamer-list">
-		<h2 class="online-offline">Online</h2>
-		<script type="text/template" id="stream-lister">
-			<div class="streamer" id={{channelName}}>
+
+		</div>
+	</script>
+	<div id = "streamer-list">
+		<!--Template from above prints here-->
+
+	</div>					
+	<div id="offline-list">
+		<h2 class="online-offline">Offline</h2>
+		<script type="text/template" id="offline-stream-lister">
+			<div class="streamer" id={{name}}>
 				<img class="stream-logo" align=left src={{logo}} height=50 width=50>
 				<div class="stream-meta">
 					<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
 					<p class="stream-status">{{status}}</p>
 				</div>
-
-			</div>
-		</script>
-		<div id = "streamer-list">
-			<!--Template from above prints here-->
-
-		</div>					
-		<div id="offline-list">
-			<h2 class="online-offline">Offline</h2>
-			<script type="text/template" id="offline-stream-lister">
-				<div class="streamer" id={{name}}>
-					<img class="stream-logo" align=left src={{logo}} height=50 width=50>
-					<div class="stream-meta">
-						<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
-						<p class="stream-status">{{status}}</p>
-					</div>
-				</script>
-			</div>
+			</script>
 		</div>
+	</div>
 
 
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>	
-		<script type="text/javascript" src="js/handlebars-v1.3.0.js"></script>	
-		<script type="text/javascript" src="js/apicall.js"></script>	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>	
+	<script type="text/javascript" src="js/handlebars-v1.3.0.js"></script>	
+	<script type="text/javascript" src="js/apicall.js"></script>	
 
 
-	</body>
-	</html>
+</body>
+</html>

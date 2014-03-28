@@ -28,6 +28,12 @@
 @hover-stream-grad-mid: darken(@stream-grad-mid, 10%);
 @hover-stream-grad-end: darken(@stream-grad-end, 10%);
 
+@streamer-button-width: 450px;
+@streamer-collapsed-button-width: 50px;
+
+
+@top-bar-height: 88px;
+
 html{
 	height: 100%;
 }
@@ -74,7 +80,15 @@ header{
 
 //stream and chat
 
-.streambox{
+#stream-area{
+
+}
+
+
+.stream-box{
+	position: absolute;
+	left: @streamer-button-width;
+	top: @top-bar-height;
 	margin-top:20px;
 	margin-left: 50px;
 }
@@ -83,15 +97,15 @@ header{
 //stream button elements
 .streamer-list{
 	//fix scrolling issue
-	position:fixed;
+	position: absolute;
 	display: block;
-	right:0;
-	top:88px;
+	left:0;
+	top:@top-bar-height;
 	height: 100%;
 	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
 	.border-bottom-left-radius(5px);
 	.border-bottom-right-radius(5px);
-	padding: 0px 0px 10000px 0px;
+	padding: 0px 0px 0px 0px;
 	width: 450px;
 	overflow: hidden;
 
@@ -125,7 +139,11 @@ header{
 }
 
 .stream-chat{
-	margin-left: 50px;
+	position: absolute;
+	right:0px;
+	top: @top-bar-height;
+	height: 100%;
+
 }
 
 .selected-stream{

@@ -234,14 +234,14 @@ $(document).ready(function() {
 
 function setStreamSize() {
 	var winWidth = $('#stream-area').innerWidth();
-	winWidth = Math.floor(winWidth - 525);
+	winWidth = Math.floor(winWidth - 825);
 	//temporary fix until I find a cleaner solution
 	var winHeight = Math.floor(winWidth*0.61);
 	console.log(winWidth);
 	$('#live_embed_player_flash').width(winWidth);
 	$('#live_embed_player_flash').height(winHeight);
 	// fix stream chat
-	$('.stream-chat').width(winWidth);
+	$('#chat-embed').height(winHeight);
 }
 
 function loadStreamFromObject() {
