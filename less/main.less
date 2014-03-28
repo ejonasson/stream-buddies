@@ -91,7 +91,7 @@ header{
 	position: absolute;
 	left: @streamer-button-width;
 	top: @top-bar-height;
-	margin-top:20px;
+	margin-top:10px;
 	margin-left: 50px;
 }
 
@@ -123,6 +123,18 @@ header{
 		}
 	
 	
+}
+
+.show-hide-streams{
+	cursor: pointer;
+	margin-top: 10px;
+	margin-right: 20px;
+	color: @stream-idle;
+	font-size: 32px;
+		:hover{
+			color: darken(@stream-idle, 40%);
+		}
+
 }
 
 .selected-stream{

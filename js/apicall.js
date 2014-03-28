@@ -76,10 +76,21 @@ function showOnline(streamArray){
 // Add Stream Embeds to page
 function addStream(streamObj){
 	var loaded = false;
+	var thisStreamID = "#" + streamObj.channelName;
 	for (var i in loadedStreams){
 		if (loadedStreams[i].channelName === streamObj.channelName){
-			streamObj.already_loaded = true;
-			loadedStreams[i] = streamObj;
+			//Reset if online has changed
+			if (loadedStreams[i].online !== streamObj.online)
+			{
+					$(thisStreamID).remove();
+					streamObj.already_loaded = false;
+					loadedStreams[i] = streamObj;
+
+			}
+			else{
+				streamObj.already_loaded = true;
+				loadedStreams[i] = streamObj;
+			}
 			loaded = true;
 		}
 	}
@@ -93,7 +104,6 @@ function loadStreamFromObject() {
 		if (loadedStreams[i]['already_loaded']){
 			//Don't Load Streams that are already loaded
 			// This needs to append new data to the existing entry
-			var loadedStreamID = "#" + loadedStreams[i]['channelName'];
 		}
 		else{
 			// Add Language here to load unloaded stream
@@ -101,6 +111,7 @@ function loadStreamFromObject() {
 			var template = Handlebars.compile(source);
 			var thisStream = loadedStreams[i];
 			if (loadedStreams[i]['online']){
+				// Remove Stream from Online or Offline if it already exists
 				$('#streamer-list').append(template(thisStream));
 				loadFirstStream(loadedStreams[i]);
 				addStreamerImage(thisStream);
@@ -262,7 +273,7 @@ $(window).resize(function(){
 //Keep incomplete functions down here
 
 
-function takeStreamOffline(){
+function takeStreamOffline(streamObj){
 
 }
 
