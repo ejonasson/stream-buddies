@@ -1,7 +1,5 @@
 // Global Variable Declarations
-//TODO: remove offlinestreams 
 var loadedStreams = [];
-var offlineStreams = [];
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
@@ -105,9 +103,12 @@ function loadStreamFromObject() {
 			if (loadedStreams[i]['online']){
 				$('#streamer-list').append(template(thisStream));
 				loadFirstStream(loadedStreams[i]);
+				addStreamerImage(thisStream);
 			}
 			else{
 				$('#offline-list').append(template(thisStream));
+				addStreamerImage(thisStream);
+
 			}
 			loadedStreams[i]['already_loaded'] = true;
 
@@ -117,7 +118,8 @@ function loadStreamFromObject() {
 
 function addStreamerImage(streamObj){
 	var id = "#" + streamObj.logoid;
-	$(id).css("background-image", "url(streamObj.logo)")
+	var url = "url(" + streamObj.logo + ")";
+	$(id).css("background-image", url);
 }
 
 function loadFirstStream(streamObj){
@@ -171,7 +173,7 @@ function setStreamSize() {
 function noStreams(){
 
 	if (!showingStream){
-		if (offlineStreams.length > 0){
+		if (loadedStreams.length > 0){
 			$('#header-message').html(notFound);
 		}
 		else{

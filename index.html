@@ -53,9 +53,9 @@
 		<h2 class="online-offline">Online</h2>
 		<script type="text/template" id="stream-lister">
 		<div class="streamer" id={{channelName}}>
-			<img id={{logoid}} class="stream-logo" align=left src={{logo}} height=50 width=50>
+			<div id={{logoid}} class="stream-logo"></div>
 			<div class="stream-meta">
-			<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
+			<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</span></h2>
 			<p class="stream-status">{{status}}</p>
 		</div>
 
@@ -69,9 +69,9 @@
 			<h2 class="online-offline">Offline</h2>
 			<script type="text/template" id="offline-stream-lister">
 			<div class="streamer" id={{name}}>
-			<img class="stream-logo" align=left src={{logo}} height=50 width=50>
+			<div id={{logoid}} class="stream-logo"></div>
 			<div class="stream-meta">
-			<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
+			<h2 class="display-name">{{display_name}}</h2>
 			<p class="stream-status">{{status}}</p>
 			</div>
 			</script>
