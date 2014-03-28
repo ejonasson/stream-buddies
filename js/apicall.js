@@ -59,6 +59,7 @@ function showOnline(streamArray){
 			game		: streamArray.game,
 			status		: streamArray.status,
 			logo		: streamArray.logo,
+			logoid		: streamArray.name + "-logo",
 			display_name: streamArray.display_name,
 			online     :  false,
 			already_loaded: false
@@ -112,6 +113,11 @@ function loadStreamFromObject() {
 
 		}
 	}
+}
+
+function addStreamerImage(streamObj){
+	var id = "#" + streamObj.logoid;
+	$(id).css("background-image", "url(streamObj.logo)")
 }
 
 function loadFirstStream(streamObj){
