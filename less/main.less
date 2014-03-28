@@ -1,6 +1,12 @@
+// IMPORTS
+
+
+
 @import "bootstrap/bootstrap.less";
 @import "lesshat/lesshat.less";
 
+
+// VARIABLE DECLARATIONS
 
 //Twitch Colors
 @twitch-purple: 		#6441A5;
@@ -33,9 +39,10 @@
 
 
 @top-bar-height: 88px;
-
-
 @gap-from-header-to-stream: 82px;
+
+
+// BASE HTML ELEMENTS
 
 html{
 	height: 100%;
@@ -62,42 +69,8 @@ header{
 
 }
 
+// CONTAINER CLASSES
 
-.stream-logo{
-}
-
-.streamer{
-	width: 450px;
-	height: 50px;
-	cursor: pointer;
-	background-color: @stream-idle;
-	overflow: hidden;
-		h2{
-		font-size: 20px;
-	}
-	
-}
-.streamer:hover{
-	.background-image(linear-gradient(top, @hover-stream-grad-beg 0%, @hover-stream-grad-mid 55%, @hover-stream-grad-end 100%));
-}
-
-//stream and chat
-
-#stream-area{
-
-}
-
-
-.stream-box{
-	position: absolute;
-	left: @streamer-button-width;
-	top: @top-bar-height;
-	margin-top:20px;
-	margin-left: 50px;
-}
-
-
-//stream button elements
 .streamer-list{
 	//fix scrolling issue
 	position: absolute;
@@ -114,6 +87,48 @@ header{
 
 }
 
+.stream-box{
+	position: absolute;
+	left: @streamer-button-width;
+	top: @top-bar-height;
+	margin-top:20px;
+	margin-left: 50px;
+}
+
+
+.stream-chat{
+	position: absolute;
+	right:0px;
+	top: @top-bar-height;
+	height: 100%;
+	margin-top: @gap-from-header-to-stream;
+
+}
+
+
+// Sub-Containers
+
+.streamer{
+	width: 450px;
+	height: 50px;
+	cursor: pointer;
+	background-color: @stream-idle;
+	overflow: hidden;
+		h2{
+		font-size: 20px;
+		:hover{
+			.background-image(linear-gradient(top, @hover-stream-grad-beg 0%, @hover-stream-grad-mid 55%, @hover-stream-grad-end 100%));
+		}
+	}
+	
+}
+
+.selected-stream{
+}
+
+//Self-Containing Elements
+
+//Stream Button Elements
 .stream-logo{
 	display: block;
 	float: left;
@@ -141,18 +156,6 @@ header{
 
 }
 
-.stream-chat{
-	position: absolute;
-	right:0px;
-	top: @top-bar-height;
-	height: 100%;
-	margin-top: @gap-from-header-to-stream;
-
-}
-
-.selected-stream{
-}
-
 .online-offline{
 	color: @twitch-light-grey;
 	margin-left: 10px;
@@ -162,4 +165,7 @@ header{
 		}
 
 }
+
+
+
 

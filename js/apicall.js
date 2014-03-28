@@ -1,3 +1,5 @@
+// Global Variable Declarations
+
 var loadedStreams = [];
 var offlineStreams = [];
 var theUser = findUser();
@@ -12,37 +14,8 @@ var notFound = "No Online Streams were found.";
 var error = "Twitch is taking longer than expected to respond.  Try refreshing your browser.";
 var invalidUser = "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.";
 
-// get Query Variables. Code courtesy of CSS Tricks
-function getQueryVariable(variable)
-{
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
-}
-function findUser(){
-	var username = "spartanerk";
-	var queryname = getQueryVariable("name");
-	if (queryname){
-		return queryname;
-	}
-	return username;
-}
+//AJAX FUNCTIONS
 
-//Function to call the API based on other input data
-function useJSON(JSON){
-
-	var follows = JSON.follows;
-	for (var i = 0; i<follows.length; i++){
-		var streamArray = follows[i].channel;
-		showOnline(streamArray);
-	}
-
-
-}
 function showOnline(streamArray){
 	var name = streamArray.name;
 	var userURL = streamUrl + name;
@@ -76,9 +49,9 @@ function showOnline(streamArray){
 			}
 		}
 	});
-
-
 }
+
+// DOM MANIPULATION FUNCTIONS
 
 // Add Stream Embeds to page
 function addStream(followArray, streamData){
@@ -114,7 +87,7 @@ function addStream(followArray, streamData){
 		console.log(loadedStreams);
 		$('#streamer-list').append(template(thisStream));
 
-				// To do: make which stream is featured somewhat more random
+			// To do: make which stream is featured somewhat more random
 		var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
 		if (getFirstStreamID == streamObj.channelName){
 			changeStream(streamObj.channelName);
@@ -129,26 +102,9 @@ function addStream(followArray, streamData){
 			changeStream(streamObj.channelName);
 			$(FirstOnlineStreamID).addClass('selected-stream');
 		}
-		// Turn stream ID into an actual ID
-
-
 	}
 	
 }
-
-
-
-function viewerCount(viewers){
-	if (viewers ==1){
-		var string = "1 viewer";
-		return string;
-	}
-	else{
-		var viewString = viewers + " viewers";
-		return viewString;
-	}
-}
-
 
 // Function to change stream 
 function changeStream(streamer){
@@ -166,6 +122,23 @@ function changeStream(streamer){
 	}
 }
 
+function setStreamSize() {
+	var winWidth = $('#stream-area').innerWidth();
+	winWidth = Math.floor(winWidth - 825);
+	//temporary fix until I find a cleaner solution
+	var winHeight = Math.floor(winWidth*0.61);
+	console.log(winWidth);
+	//Prevent Window from Getting Unreasonably small
+	if(winWidth > 300){
+		$('#live_embed_player_flash').width(winWidth);
+		$('#live_embed_player_flash').height(winHeight);
+		// fixed stream chat
+		console.log($('#stream-chat').height());
+		$('.stream-chat').height(winHeight);
+	}
+}
+
+
 
 //Trigger if we fail to find streams
 function noStreams(){
@@ -181,6 +154,55 @@ function noStreams(){
 		}
 	}
 }
+
+
+// OTHER FUNCTIONS
+
+// get Query Variables. Code courtesy of CSS Tricks
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+function findUser(){
+	var username = "spartanerk";
+	var queryname = getQueryVariable("name");
+	if (queryname){
+		return queryname;
+	}
+	return username;
+}
+
+//Function to call the API based on other input data
+function useJSON(JSON){
+
+	var follows = JSON.follows;
+	for (var i = 0; i<follows.length; i++){
+		var streamArray = follows[i].channel;
+		showOnline(streamArray);
+	}
+
+
+}
+
+// Make sure viewer count is appropriately singular or plural
+function viewerCount(viewers){
+	if (viewers ==1){
+		var string = "1 viewer";
+		return string;
+	}
+	else{
+		var viewString = viewers + " viewers";
+		return viewString;
+	}
+}
+
+// The Document.Ready (aka what actually runs)
 
 $(document).ready(function() {
 	function queryTwitch(){
@@ -232,19 +254,7 @@ $(document).ready(function() {
 
 });
 
-function setStreamSize() {
-	var winWidth = $('#stream-area').innerWidth();
-	winWidth = Math.floor(winWidth - 825);
-	//temporary fix until I find a cleaner solution
-	var winHeight = Math.floor(winWidth*0.61);
-	console.log(winWidth);
-	$('#live_embed_player_flash').width(winWidth);
-	$('#live_embed_player_flash').height(winHeight);
-	// fixed stream chat
-	console.log($('#stream-chat').height());
-	$('.stream-chat').height(winHeight);
-}
-
+//Keep incomplete functions down here
 
 
 function loadStreamFromObject() {
