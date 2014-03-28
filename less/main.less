@@ -43,7 +43,8 @@ header{
 	margin: 0;
 	padding: 0;
 	color: @twitch-light-grey;
-	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	h1{
+	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
+	h1{
 		margin-top: 0;
 		small{
 			font-size: ceil(@font-size-h1 * .5);
@@ -75,16 +76,22 @@ header{
 
 .streambox{
 	margin-top:20px;
+	margin-left: 50px;
 }
 
 
 //stream button elements
 .streamer-list{
+	//fix scrolling issue
+	position:fixed;
+	display: block;
+	right:0;
+	top:88px;
 	height: 100%;
-	background-color: @twitch-dark-grey;
+	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
 	.border-bottom-left-radius(5px);
 	.border-bottom-right-radius(5px);
-	padding: 0px 0px 0px 0px;
+	padding: 0px 0px 10000px 0px;
 	width: 450px;
 	overflow: hidden;
 
@@ -95,10 +102,17 @@ header{
 	float: left;
 	margin-right: 10px;
 }
+.display-name{
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
 
 .stream-viewers{
+	font-weight: normal;
 	float: right;
-	font-size: 14pt;
+	font-size: 12pt;
 	padding-right: 20px;
 	}
 .stream-status{
@@ -110,10 +124,8 @@ header{
 
 }
 
-.display-name{
-	margin: 0;
-	padding: 0;
-	width: 100%;
+.stream-chat{
+	margin-left: 50px;
 }
 
 .selected-stream{

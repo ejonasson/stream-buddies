@@ -161,7 +161,7 @@ function changeStream(streamer){
 		if (loadedStreams[i]['channelName'] === streamer){
 				var streamObj = loadedStreams[i];
 				$('#stream-area').html(template(streamObj));
-
+				setStreamSize();
 		}
 	}
 }
@@ -194,7 +194,6 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			dataType: 'jsonp',
 			cache: true,
-			async: false,
 			error: function(){
 			},
 			success: function(data) {
@@ -217,7 +216,7 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
-	setTimeout(noStreams, 3000);
+	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
@@ -225,9 +224,25 @@ $(document).ready(function() {
 		changeStream(streamerID);
 	});
 //TODO: Rework function so that api calls and loading streams are asynchronous. That could be faster/cleaner.
+	setStreamSize();
+	$(window).resize(function(){
+		setStreamSize();
 
+	});
 
 });
+
+function setStreamSize() {
+	var winWidth = $('#stream-area').innerWidth();
+	winWidth = Math.floor(winWidth - 525);
+	//temporary fix until I find a cleaner solution
+	var winHeight = Math.floor(winWidth*0.61);
+	console.log(winWidth);
+	$('#live_embed_player_flash').width(winWidth);
+	$('#live_embed_player_flash').height(winHeight);
+	// fix stream chat
+	$('.stream-chat').width(winWidth);
+}
 
 function loadStreamFromObject() {
 	for (var i in loadedStreams){
