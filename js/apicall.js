@@ -1,5 +1,5 @@
 // Global Variable Declarations
-
+//TODO: remove offlinestreams 
 var loadedStreams = [];
 var offlineStreams = [];
 var theUser = findUser();
@@ -53,9 +53,23 @@ function showOnline(streamArray){
 		cache: true,
 		async: false,
 		success: function(data) {
+			var streamObj = {
+
+			channelName : streamArray.name,
+			viewerCount : viewerCount(data['stream']),
+			game		: streamArray.game,
+			status		: streamArray.status,
+			logo		: streamArray.logo,
+			display_name: streamArray.display_name,
+			already_loaded: checkIfLoaded(streamArray.name),
+			online     :  false,
+		};
+
 			if (data.stream !== null){
-				addStream(streamArray, data);
+				streamObj.online = true;
 			}
+			addStream(streamObj);
+/*
 			else{
 				var inList = false;
 				for (var i in offlineStreams){
@@ -69,7 +83,9 @@ function showOnline(streamArray){
 					$('#offline-list').append(template(streamArray));
 					offlineStreams.push(name);
 				}
+
 			}
+*/
 		}
 	});
 }
@@ -77,19 +93,15 @@ function showOnline(streamArray){
 // DOM MANIPULATION FUNCTIONS
 
 // Add Stream Embeds to page
-function addStream(followArray, streamData){
-	var streamObj = {
-
-		channelName : followArray.name,
-		viewerCount : viewerCount(streamData['stream']['viewers']),
-		game		: followArray.game,
-		status		: followArray.status,
-		logo		: followArray.logo,
-		display_name: followArray.display_name,
-		already_loaded: checkIfLoaded(loadedStreams)
-	};
+function addStream(streamObj){
 	if (streamObj.already_loaded){
-		// Todo: update stream ifno?
+		// update stream object with new data
+		for (var i in loadedStreams){
+			if (loadedStreams[i].name === streamObj.name){
+				loadedStreams[i] = streamObj;
+				loadedStreams[i].already_loaded = true;
+			}
+		}
 	}
 	else{
 		loadedStreams.push(streamObj);
@@ -98,19 +110,26 @@ function addStream(followArray, streamData){
 }
 
 function loadStreamFromObject() {
-	console.log(loadedStreams);
 	for (var i in loadedStreams){
 		if (loadedStreams[i]['already_loaded']){
 			//Don't Load Streams that are already loaded
+			// This needs to append new data to the existing entry
+			var loadedStreamID = "#" + loadedStreams[i]['channelName'];
 		}
 		else{
 			// Add Language here to load unloaded stream
 			var source = $('#stream-lister').html();
 			var template = Handlebars.compile(source);
 			var thisStream = loadedStreams[i];
-			$('#streamer-list').append(template(thisStream));
-			loadFirstStream(loadedStreams[i]);
+			if (loadedStreams[i]['online'] === true){
+				$('#streamer-list').append(template(thisStream));
+				loadFirstStream(loadedStreams[i]);
+			}
+			else{
+				$('#offline-list').append(template(thisStream));
+			}
 			loadedStreams[i]['already_loaded'] = true;
+
 		}
 	}
 }
@@ -213,9 +232,9 @@ function useJSON(JSON){
 	}
 }
 
-function checkIfLoaded() {
+function checkIfLoaded(name) {
 	for (var i = 0; i<loadedStreams.length; i++){
-		if (loadedStreams[i].channelName === followArray.name){
+		if (loadedStreams[i].channelName === name){
 			return true;
 		}
 		else{
@@ -225,15 +244,20 @@ function checkIfLoaded() {
 }
 
 // Make sure viewer count is appropriately singular or plural
-function viewerCount(viewers){
-	if (viewers ==1){
+function viewerCount(data){
+	if(data !== null){
+
+
+	if (data['viewers'] ==1){
 		var string = "1 viewer";
 		return string;
 	}
 	else{
-		var viewString = viewers + " viewers";
+		var viewString = data['viewers'] + " viewers";
 		return viewString;
 	}
+	}
+	return null;
 }
 
 // The Document.Ready (aka what actually runs)
@@ -265,7 +289,7 @@ $(window).resize(function(){
 
 
 function takeStreamOffline(){
-	
+
 }
 
 function takeStreamOnline(){
