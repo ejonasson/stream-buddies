@@ -1,6 +1,6 @@
 // Global Variable Declarations
 
-var loadedStreams = []
+var loadedStreams = [];
 var offlineStreams = [];
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
@@ -15,6 +15,30 @@ var error = "Twitch is taking longer than expected to respond.  Try refreshing y
 var invalidUser = "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.";
 
 //AJAX FUNCTIONS
+function queryTwitch(){
+	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
+		$.ajax({
+			url: followsUrl,
+			type: 'GET',
+			contentType: 'application/json',
+			dataType: 'jsonp',
+			cache: true,
+			error: function(){
+			},
+			success: function(data) {
+				if(data.status === 404){
+					$('#header-message').html(invalidUser);
+					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
+					showingStream = true;
+					return false;
+				}
+				useJSON(data);
+
+			},
+
+		});
+	});
+}
 
 function showOnline(streamArray){
 	var name = streamArray.name;
@@ -55,29 +79,47 @@ function showOnline(streamArray){
 // Add Stream Embeds to page
 function addStream(followArray, streamData){
 	var streamObj = {
-		 
-			channelName : followArray.name,
-			viewerCount : viewerCount(streamData['stream']['viewers']),
-			game		: followArray.game,
-			status		: followArray.status,
-			logo		: followArray.logo,
-			display_name: followArray.display_name,
-			already_loaded: checkIfLoaded(loadedStreams)
-		};
+
+		channelName : followArray.name,
+		viewerCount : viewerCount(streamData['stream']['viewers']),
+		game		: followArray.game,
+		status		: followArray.status,
+		logo		: followArray.logo,
+		display_name: followArray.display_name,
+		already_loaded: checkIfLoaded(loadedStreams)
+	};
 	if (streamObj.already_loaded){
 		// Todo: update stream ifno?
 	}
 	else{
-
 		loadedStreams.push(streamObj);
 	}
 	
 }
+
+function loadStreamFromObject() {
+	console.log(loadedStreams);
+	for (var i in loadedStreams){
+		if (loadedStreams[i]['already_loaded']){
+			//Don't Load Streams that are already loaded
+		}
+		else{
+			// Add Language here to load unloaded stream
+			var source = $('#stream-lister').html();
+			var template = Handlebars.compile(source);
+			var thisStream = loadedStreams[i];
+			$('#streamer-list').append(template(thisStream));
+			loadFirstStream(loadedStreams[i]);
+			loadedStreams[i]['already_loaded'] = true;
+		}
+	}
+}
+
 function loadFirstStream(streamObj){
 			// To do: make which stream is featured somewhat more random
-		var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
-		if (getFirstStreamID == streamObj.channelName){
-			changeStream(streamObj.channelName);
+			var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
+			if (getFirstStreamID == streamObj.channelName){
+				changeStream(streamObj.channelName);
 			// Turn stream ID into an actual ID
 			var FirstStreamID = "#" + getFirstStreamID;
 			$(FirstStreamID).addClass('selected-stream');
@@ -89,7 +131,7 @@ function loadFirstStream(streamObj){
 			changeStream(streamObj.channelName);
 			$(FirstOnlineStreamID).addClass('selected-stream');
 		}
-}
+	}
 
 
 // Function to change stream 
@@ -99,13 +141,13 @@ function changeStream(streamer){
 	var source = $('#stream-embed').html();
 	var template = Handlebars.compile(source);
 // Get loaded stream object
-	for (var i in loadedStreams){
-		if (loadedStreams[i]['channelName'] === streamer){
-				var streamObj = loadedStreams[i];
-				$('#stream-area').html(template(streamObj));
-				setStreamSize();
-		}
+for (var i in loadedStreams){
+	if (loadedStreams[i]['channelName'] === streamer){
+		var streamObj = loadedStreams[i];
+		$('#stream-area').html(template(streamObj));
+		setStreamSize();
 	}
+}
 }
 
 function setStreamSize() {
@@ -144,13 +186,13 @@ function noStreams(){
 // get Query Variables. Code courtesy of CSS Tricks
 function getQueryVariable(variable)
 {
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i=0;i<vars.length;i++) {
+		var pair = vars[i].split("=");
+		if(pair[0] == variable){return pair[1];}
+	}
+	return(false);
 }
 function findUser(){
 	var username = "spartanerk";
@@ -179,7 +221,7 @@ function checkIfLoaded() {
 		else{
 		}
 	}
-return false;
+	return false;
 }
 
 // Make sure viewer count is appropriately singular or plural
@@ -197,32 +239,7 @@ function viewerCount(viewers){
 // The Document.Ready (aka what actually runs)
 
 $(document).ready(function() {
-	function queryTwitch(){
-		Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
-		//todo: separate the stream call from the button call
-		//So that the stream doesn't have to re-load
-		$.ajax({
-			url: followsUrl,
-			type: 'GET',
-			contentType: 'application/json',
-			dataType: 'jsonp',
-			cache: true,
-			error: function(){
-			},
-			success: function(data) {
-				if(data.status === 404){
-					$('#header-message').html(invalidUser);
-					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
-					showingStream = true;
-					return false;
-				}
-				useJSON(data);
-
-			},
-
-		});
-	});
-	}
+	
 
 	//Currently only adds, need a good way to subtract
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
@@ -236,34 +253,23 @@ $(document).ready(function() {
 		var streamerID = this.getAttribute('id');
 		changeStream(streamerID);
 	});
-//TODO: Rework function so that api calls and loading streams are asynchronous. That could be faster/cleaner.
+setStreamSize();
+$(window).resize(function(){
 	setStreamSize();
-	$(window).resize(function(){
-		setStreamSize();
 
-	});
+});
 
 });
 
 //Keep incomplete functions down here
 
 
-function loadStreamFromObject() {
-	console.log(loadedStreams);
-	for (var i in loadedStreams){
-		if (loadedStreams[i]['already_loaded']){
-			//Don't Load Streams that are already loaded
-		}
-		else{
-			// Add Language here to load unloaded stream
-		var source = $('#stream-lister').html();
-		var template = Handlebars.compile(source);
-		var thisStream = loadedStreams[i];
-		$('#streamer-list').append(template(thisStream));
-		loadFirstStream(loadedStreams[i]);
-		loadedStreams[i]['already_loaded'] = true;
-		}
-	}
+function takeStreamOffline(){
+	
+}
+
+function takeStreamOnline(){
+
 }
 
 
