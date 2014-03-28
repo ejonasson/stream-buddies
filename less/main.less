@@ -119,6 +119,7 @@ header{
 	}
 	:hover{
 			background-color: darken(@stream-idle, 40%);
+			height: 100%;
 		}
 	
 	
@@ -143,6 +144,8 @@ header{
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	// I have no idea why this one needs !important, but it does
+	height: 22px !important;
 }
 
 .stream-viewers{
@@ -150,6 +153,8 @@ header{
 	float: right;
 	font-size: 12pt;
 	padding-right: 20px;
+	//avoids hover 100% height issue
+	height: 17px;
 	}
 .stream-status{
 	font-size: 14px;
@@ -157,6 +162,8 @@ header{
 	white-space: nowrap;
 	overflow: hidden;
 	padding-right: 20px;
+	//avoids hover 100% height issue
+	height: 20px;
 
 }
 
