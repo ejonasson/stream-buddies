@@ -68,12 +68,12 @@ function addStream(followArray, streamData){
 		// Todo: update stream ifno?
 	}
 	else{
-		var source = $('#stream-lister').html();
-		var template = Handlebars.compile(source);
-		var thisStream = streamObj;
-		loadedStreams.push(streamObj);
-		$('#streamer-list').append(template(thisStream));
 
+		loadedStreams.push(streamObj);
+	}
+	
+}
+function loadFirstStream(streamObj){
 			// To do: make which stream is featured somewhat more random
 		var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
 		if (getFirstStreamID == streamObj.channelName){
@@ -89,9 +89,8 @@ function addStream(followArray, streamData){
 			changeStream(streamObj.channelName);
 			$(FirstOnlineStreamID).addClass('selected-stream');
 		}
-	}
-	
 }
+
 
 // Function to change stream 
 function changeStream(streamer){
@@ -229,7 +228,7 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
-	setInterval(loadStreamFromObject, 1000);
+	setInterval(loadStreamFromObject, 100);
 	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
@@ -253,14 +252,16 @@ function loadStreamFromObject() {
 	console.log(loadedStreams);
 	for (var i in loadedStreams){
 		if (loadedStreams[i]['already_loaded']){
-			//Don't Load Streams
-			console.log("stream loaded");
+			//Don't Load Streams that are already loaded
 		}
 		else{
-			console.log("loading stream");
-			console.log(loadedStreams);
-
-			loadedStreams[i]['already_loaded'] = true;
+			// Add Language here to load unloaded stream
+		var source = $('#stream-lister').html();
+		var template = Handlebars.compile(source);
+		var thisStream = loadedStreams[i];
+		$('#streamer-list').append(template(thisStream));
+		loadFirstStream(loadedStreams[i]);
+		loadedStreams[i]['already_loaded'] = true;
 		}
 	}
 }
