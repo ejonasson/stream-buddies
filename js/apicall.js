@@ -1,6 +1,6 @@
 // Global Variable Declarations
 
-var loadedStreams = [];
+var loadedStreams = []
 var offlineStreams = [];
 var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
@@ -40,7 +40,6 @@ function showOnline(streamArray){
 					}
 				}
 				if (!inList){
-					console.log(streamArray);
 					var source = $('#offline-stream-lister').html();
 					var template = Handlebars.compile(source);
 					$('#offline-list').append(template(streamArray));
@@ -55,17 +54,6 @@ function showOnline(streamArray){
 
 // Add Stream Embeds to page
 function addStream(followArray, streamData){
-	function checkIfLoaded() {
-		for (var i = 0; i<loadedStreams.length; i++){
-			if (loadedStreams[i].channelName === followArray.name){
-				return true;
-			}
-			else{
-			}
-
-		}
-	return false;
-	}
 	var streamObj = {
 		 
 			channelName : followArray.name,
@@ -84,7 +72,6 @@ function addStream(followArray, streamData){
 		var template = Handlebars.compile(source);
 		var thisStream = streamObj;
 		loadedStreams.push(streamObj);
-		console.log(loadedStreams);
 		$('#streamer-list').append(template(thisStream));
 
 			// To do: make which stream is featured somewhat more random
@@ -127,13 +114,11 @@ function setStreamSize() {
 	winWidth = Math.floor(winWidth - 825);
 	//temporary fix until I find a cleaner solution
 	var winHeight = Math.floor(winWidth*0.61);
-	console.log(winWidth);
 	//Prevent Window from Getting Unreasonably small
 	if(winWidth > 300){
 		$('#live_embed_player_flash').width(winWidth);
 		$('#live_embed_player_flash').height(winHeight);
 		// fixed stream chat
-		console.log($('#stream-chat').height());
 		$('.stream-chat').height(winHeight);
 	}
 }
@@ -148,7 +133,6 @@ function noStreams(){
 			$('#header-message').html(notFound);
 		}
 		else{
-			console.log(loadedStreams);
 			$('#header-message').html(error);
 
 		}
@@ -186,8 +170,17 @@ function useJSON(JSON){
 		var streamArray = follows[i].channel;
 		showOnline(streamArray);
 	}
+}
 
-
+function checkIfLoaded() {
+	for (var i = 0; i<loadedStreams.length; i++){
+		if (loadedStreams[i].channelName === followArray.name){
+			return true;
+		}
+		else{
+		}
+	}
+return false;
 }
 
 // Make sure viewer count is appropriately singular or plural
@@ -206,7 +199,6 @@ function viewerCount(viewers){
 
 $(document).ready(function() {
 	function queryTwitch(){
-		console.log("Requesting data from Twitch");
 		Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
 		//todo: separate the stream call from the button call
 		//So that the stream doesn't have to re-load
@@ -219,7 +211,6 @@ $(document).ready(function() {
 			error: function(){
 			},
 			success: function(data) {
-				console.log(data);
 				if(data.status === 404){
 					$('#header-message').html(invalidUser);
 					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
@@ -238,6 +229,7 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
+	setInterval(loadStreamFromObject, 1000);
 	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
@@ -258,14 +250,17 @@ $(document).ready(function() {
 
 
 function loadStreamFromObject() {
+	console.log(loadedStreams);
 	for (var i in loadedStreams){
-		if (!loadedStreams.i.already_loaded)
-		{
+		if (loadedStreams[i]['already_loaded']){
 			//Don't Load Streams
+			console.log("stream loaded");
 		}
 		else{
-			//Load Streams
-			loadedStreams.i.already_loaded = true;
+			console.log("loading stream");
+			console.log(loadedStreams);
+
+			loadedStreams[i]['already_loaded'] = true;
 		}
 	}
 }
