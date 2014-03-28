@@ -38,7 +38,7 @@
 			</div>
 			<div class="col-lg-5">
 				<div class="streamer-list">
-					<h2 class="online-offline">Currently Online:</h2>
+					<h2 class="online-offline">Online</h2>
 					<script type="text/template" id="stream-lister">
 					<div class="streamer" id={{channelName}}>
 						<img class="stream-logo" align=left src={{logo}} height=50 width=50>
@@ -52,10 +52,17 @@
 					<div id = "streamer-list">
 						<!--Template from above prints here-->
 
-					</div>
-
-					<div id="offline-list" class="online-offline">
-					<h2>Currently Offline:</h2>
+					</div>					
+					<div id="offline-list">
+					<h2 class="online-offline">Offline</h2>
+					<script type="text/template" id="offline-stream-lister">
+					<div class="streamer" id={{name}}>
+						<img class="stream-logo" align=left src={{logo}} height=50 width=50>
+						<div class="stream-meta">
+							<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</h2>
+							<p class="stream-status">{{status}}</p>
+						</div>
+					</script>
 					</div>
 				</div>
 			</div>

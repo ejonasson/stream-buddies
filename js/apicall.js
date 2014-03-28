@@ -67,7 +67,10 @@ function showOnline(streamArray){
 					}
 				}
 				if (!inList){
-					$('#offline-list').append(name + " ");
+					console.log(streamArray);
+					var source = $('#offline-stream-lister').html();
+					var template = Handlebars.compile(source);
+					$('#offline-list').append(template(streamArray));
 					offlineStreams.push(name);
 				}
 			}

@@ -75,11 +75,20 @@ header{
 
 .streambox{
 	margin-top:20px;
-	margin-bottom: 20px;
 }
 
 
 //stream button elements
+.streamer-list{
+	height: 100%;
+	background-color: @twitch-dark-grey;
+	.border-bottom-left-radius(5px);
+	.border-bottom-right-radius(5px);
+	padding: 0px 0px 0px 0px;
+	width: 450px;
+	overflow: hidden;
+
+}
 
 .stream-logo{
 	display: block;
@@ -113,16 +122,10 @@ header{
 .online-offline{
 	color: @twitch-light-grey;
 	margin-left: 10px;
+		h2{
+			margin-top: 0px;
+			padding-top: 0px;
+		}
 
 }
 
-.streamer-list{
-	height: 100%;
-	background-color: @twitch-dark-grey;
-	.border-bottom-left-radius(5px);
-	.border-bottom-right-radius(5px);
-	padding: 20px 0px 20px 0px;
-	width: 450px;
-	overflow: hidden;
-
-}
