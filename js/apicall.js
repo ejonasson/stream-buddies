@@ -240,9 +240,12 @@ function setStreamSize() {
 	console.log(winWidth);
 	$('#live_embed_player_flash').width(winWidth);
 	$('#live_embed_player_flash').height(winHeight);
-	// fix stream chat
-	$('#chat-embed').height(winHeight);
+	// fixed stream chat
+	console.log($('#stream-chat').height());
+	$('.stream-chat').height(winHeight);
 }
+
+
 
 function loadStreamFromObject() {
 	for (var i in loadedStreams){
