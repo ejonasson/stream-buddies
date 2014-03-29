@@ -6,6 +6,10 @@ var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
 var showingStream = false;
 
+
+//This is used in mulitple places, put up here for easy change
+var streamBoxWidth = 450;
+
 // Putting any language we need to pass up here for easier reference
 
 var notFound = "No Online Streams were found.";
@@ -175,7 +179,6 @@ function setStreamSize() {
 	if(winWidth > 300){
 		$('#live_embed_player_flash').width(winWidth);
 		$('#live_embed_player_flash').height(winHeight);
-		// fixed stream chat
 		$('.stream-chat').height(winHeight);
 	}
 }
@@ -275,23 +278,31 @@ $(document).on('click', '.show-hide-streams', function(){
 });
 
 function fullOrMinStreams(){
+	var widthChange = 0;
 	var list = $('.streamer-list');
-	if (list.width() > 300){
+	if (list.width() === streamBoxWidth){
+		widthChange = 50;
 		if (!list.is(':animated')){
 			$('.streamer-list').animate({
-				width: "50px",
-			}, 300, function(){
+				width: widthChange,
+			}, 100, function(){
 				setStreamSize();
+				$('.stream-box').css("left", widthChange);
+				$('.hide-small').css("display", "none");
 			});
 		}
 	}
 	else{
+		widthChange = streamBoxWidth;
+
 		if (!list.is(':animated')){
 			$('.streamer-list').animate({
-				width: "450px",
-			}, 300, function(){
-				setStreamSize();}
-				);
+				width: widthChange,
+			}, 100, function(){
+				setStreamSize();
+				$('.stream-box').css("left", streamBoxWidth);
+				$('.hide-small').css("display", "inline");
+				});
 		}
 	}
 }

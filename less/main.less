@@ -39,6 +39,7 @@
 
 
 @top-bar-height: 50px;
+@chat-height: 40px;
 @gap-from-header-to-stream: 82px;
 
 
@@ -99,7 +100,7 @@ header{
 .stream-chat{
 	position: absolute;
 	right:0px;
-	top: @top-bar-height;
+	top: @chat-height;
 	height: 100%;
 	width: 320px;
 	margin-top: @gap-from-header-to-stream;
@@ -127,9 +128,11 @@ header{
 }
 
 .show-hide-streams{
+	position: relative;
+	margin-right: 10px;
 	cursor: pointer;
 	margin-top: 10px;
-	margin-right: 20px;
+	margin-left:20px;
 	color: @stream-idle;
 	font-size: 32px;
 		:hover{
