@@ -81,13 +81,20 @@ footer{
 }
 // CONTAINER CLASSES
 
+.side-body{
+	position: absolute;
+	min-width: 100%;
+	min-height: 100%;
+}
+
 #stream-area {
-	width: 100%;
-	height: 100%;
+	display: inline-block;
+	margin: 0 auto;
 }
 .streamer-list{
 	//fix scrolling issue
-	position: absolute;
+//	position: absolute;
+	float: left;
 	z-index: 50;
 	display: block;
 	left:0;
@@ -104,23 +111,16 @@ footer{
 }
 
 .stream-box{
-	position: absolute;
-	z-index: 50;
-	left: @streamer-button-width;
-	top: @top-bar-height;
+//	left: @streamer-button-width;
+//	top: @top-bar-height;
 	margin-top:10px;
 	margin-left: 30px;
 }
 
 
-.stream-chat{
-	position: absolute;
-	z-index: 10;
-	right:0px;
-	top: @chat-height;
-	height: 100%;
-	width: 320px;
-	margin-top: @gap-from-header-to-stream;
+#stream-chat-area{
+	float:right;
+	display: inline-block;
 
 }
 

@@ -177,7 +177,7 @@ function setStreamSize() {
 	var winWidth = $('#stream-area').innerWidth();
 	var sidebarwidth = $(".streamer-list").width();
 	var chatWidth = $(".stream-chat").width();
-	winWidth = Math.floor(winWidth - sidebarwidth - chatWidth - 50);
+	winWidth = Math.floor(winWidth - sidebarwidth - chatWidth - 500);
 	//temporary fix until I find a cleaner solution
 	var winHeight = Math.floor(winWidth*0.61);
 	//Prevent Window from Getting Unreasonably small
