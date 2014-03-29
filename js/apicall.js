@@ -139,6 +139,7 @@ function addStreamerImage(streamObj){
 
 function loadFirstStream(streamObj){
 	// To do: make which stream is featured somewhat more random
+
 	var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
 	if (getFirstStreamID == streamObj.channelName){
 		// Turn stream ID into an actual ID
@@ -160,10 +161,12 @@ function changeStream(streamer){
 	var template = Handlebars.compile(source);
 // Get loaded stream object
 for (var i in loadedStreams){
+	var sidebarwidth = $(".streamer-list").width();
 	if (loadedStreams[i]['channelName'] === streamer){
 		var streamObj = loadedStreams[i];
 		$('#stream-area').html(template(streamObj));
 		setStreamSize();
+		$('.stream-box').css('left', sidebarwidth);
 	}
 }
 }
