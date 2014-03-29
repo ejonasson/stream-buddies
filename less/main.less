@@ -22,6 +22,9 @@
 @stream-hover: 			darken(@twitch-light-grey, 20%);
 @stream-padding-left: 	5px;
 
+
+@background-color: 		@twitch-dark-grey;
+
 @stream-grad-beg: 		#e2e2e2;
 @stream-grad-mid: 		#d1d1d1;
 @stream-grad-end: 		#fefefe;
@@ -34,7 +37,7 @@
 @hover-stream-grad-mid: darken(@stream-grad-mid, 10%);
 @hover-stream-grad-end: darken(@stream-grad-end, 10%);
 
-@streamer-button-width: 450px;
+@streamer-button-width: 300px;
 @streamer-collapsed-button-width: 50px;
 
 
@@ -59,8 +62,9 @@ body{
 header{
 	margin: 0;
 	padding: 0;
-	color: @twitch-light-grey;
-	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
+	color: @stream-idle;
+	//.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
+	background-color: @background-color;
 	h1{
 		margin-top: 0;
 		small{
@@ -70,30 +74,38 @@ header{
 
 }
 
+footer{
+	position: relative;
+	display: block;
+	bottom: 0px;
+}
 // CONTAINER CLASSES
 
-.site-body{
-	position: relative;
+#stream-area {
+	width: 100%;
+	height: 100%;
 }
-
 .streamer-list{
 	//fix scrolling issue
 	position: absolute;
+	z-index: 50;
 	display: block;
 	left:0;
-	top:@top-bar-height;
+	top:0px;
 	height: 100%;
-	.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
+	//.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
+	background-color: @background-color;
 	.border-bottom-left-radius(5px);
 	.border-bottom-right-radius(5px);
 	padding: 0px 0px 0px 0px;
-	width: 450px;
+	width: @streamer-button-width;
 	overflow: hidden;
 
 }
 
 .stream-box{
 	position: absolute;
+	z-index: 50;
 	left: @streamer-button-width;
 	top: @top-bar-height;
 	margin-top:10px;
@@ -103,6 +115,7 @@ header{
 
 .stream-chat{
 	position: absolute;
+	z-index: 100;
 	right:0px;
 	top: @chat-height;
 	height: 100%;
@@ -111,11 +124,20 @@ header{
 
 }
 
+.container-fixed{
+	position: absolute;
+	width: 100%;
+	padding-left: 300px;
+	margin-right: 0px;
+	height: 53px;
+	background-color: @background-color;
+	padding-bottom: 5px;
+}
 
 // Sub-Containers
 
 .streamer{
-	width: 450px;
+	width: @streamer-button-width;
 	height: 50px;
 	cursor: pointer;
 	background-color: @stream-idle;
@@ -135,7 +157,7 @@ header{
 	position: relative;
 	margin-right: 10px;
 	cursor: pointer;
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-left:20px;
 	color: @stream-idle;
 	font-size: 32px;
@@ -147,6 +169,10 @@ header{
 
 .selected-stream{
 }
+
+.searchbox{
+	position:relative;
+	padding-top: 4px;}
 
 //Self-Containing Elements
 
@@ -190,16 +216,29 @@ header{
 .online-offline{
 	color: @twitch-light-grey;
 	margin-left: 10px;
-		h2{
-			margin-top: 0px;
-			padding-top: 0px;
-		}
-
+	margin-top: 5px;
 }
 
 .form-control{
 	.placeholder(@twitch-dark-grey);
 
+}
+.grayscale{
+	-webkit-filter: grayscale(1);
+}
+
+.title{
+	margin-left: 10px;
+	padding-bottom: 0px;
+	padding-top: 7px;
+}
+
+
+.streamout{
+	display: inline;
+}
+.streamin{
+	display: none;
 }
 
 

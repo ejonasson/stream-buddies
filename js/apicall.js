@@ -8,7 +8,7 @@ var showingStream = false;
 
 
 //This is used in mulitple places, put up here for easy change
-var streamBoxWidth = 450;
+var streamBoxWidth = 300;
 
 // Putting any language we need to pass up here for easier reference
 
@@ -121,6 +121,8 @@ function loadStreamFromObject() {
 				addStreamerImage(thisStream);
 			}
 			else{
+				source = $('#offline-stream-lister').html();
+				template = Handlebars.compile(source);
 				$('#offline-list').append(template(thisStream));
 				addStreamerImage(thisStream);
 
