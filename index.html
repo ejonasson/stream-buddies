@@ -8,7 +8,7 @@
 </head>
 <body>
 	<header>
-		<div class="container-fixed">
+		<div class="header-fixed">
 
 			<h1 class = "title">StreamBuddies    <small>Always Know Who's On</small></h1>
 		</div>
@@ -23,7 +23,7 @@
 		
 	</div>
 </header>
-<div class = "site-body">
+<div class = "container main-body">
 	<script type="text/template" id="stream-embed">
 		<div class="stream-box">
 			<h2>{{display_name}}</h2>
@@ -36,60 +36,70 @@
 		</div>
 	</script>
 
-	<div class="streamer-list">
-		<div class="show-hide-streams pull-right" id="show-hide-streams" >	
-			<span class = "streamout glyphicon glyphicon-chevron-left"></span><span class = "streamin glyphicon glyphicon-chevron-right"</span>
-		</div>
-		<h2 class="online-offline"><span class = "glyphicon glyphicon-facetime-video"></span><span class="hide-small"> Online</span></h2>
-		<script type="text/template" id="stream-lister">
-			<div class="streamer" id={{channelName}}>
-				<div id={{logoid}} class="stream-logo"></div>
-				<div class="stream-meta">
-					<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</span></h2>
-					<p class="stream-status">{{status}}</p>
+	
+	<div class="row">
+		<div class="col-md-10">
+			<div id="stream-area">
+				<div class="stream-box">	
+					<h2 id = "header-message">Streams are loading...</h2>
+					<!--Template from above prints here-->
+					<object type="application/x-shockwave-flash" style="height:378px; width:620px;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=nostreamloaded" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=nostreamloaded&auto_play=true&start_volume=25" /></object>
 				</div>
-
 			</div>
-		</script>
-		<script type="text/template" id="offline-stream-lister">
-			<div class="streamer" id={{channelName}}>
-				<div id={{logoid}} class="stream-logo grayscale"></div>
-				<div class="stream-meta">
-					<h2 class="display-name">{{display_name}}</h2>
-					<p class="stream-status">{{status}}</p>
-				</div>
 
-			</div>
-		</script>
-		<div id = "streamer-list">
-			<!--Template from above prints here-->
-
-		</div>					
-		<div id="offline-list">
-			<h2 class="online-offline"><span class = "glyphicon glyphicon-stop"></span><span class="hide-small"> Offline</span></h2>
 		</div>
 	</div>
-
-	<div id="stream-area">
-		<div class="stream-box">	
-			<h2 id = "header-message">Streams are loading...</h2>
-			<!--Template from above prints here-->
-			<object type="application/x-shockwave-flash" style="height:378px; width:620px;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=nostreamloaded" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=nostreamloaded&auto_play=true&start_volume=25" /></object>
-		</div>
-
-	</div>
-<div id="stream-chat-area">
-		<div class="stream-chat">
-		</div>
-		<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=nostreamloaded&popout_chat=true" style = "height:100%; width: 320px;"></iframe>
-	</div>
-
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>	
-	<script type="text/javascript" src="js/handlebars-v1.3.0.js"></script>	
-	<script type="text/javascript" src="js/main.min.js"></script>	
-
 </div>
 
+
+		<div class=" pull-right">
+				<div id="stream-chat-area">
+					<div class="stream-chat">
+					</div>
+					<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=nostreamloaded&popout_chat=true" style = "height:100%; width: 320px;"></iframe>
+				</div>
+			</div>
+</div>
+
+<div class="streamer-list">
+	<div class="show-hide-streams pull-right" id="show-hide-streams" >	
+		<span class = "streamout glyphicon glyphicon-chevron-left"></span><span class = "streamin glyphicon glyphicon-chevron-right"</span>
+	</div>
+	<h2 class="online-offline"><span class = "glyphicon glyphicon-facetime-video"></span><span class="hide-small"> Online</span></h2>
+	<script type="text/template" id="stream-lister">
+		<div class="streamer" id={{channelName}}>
+			<div id={{logoid}} class="stream-logo"></div>
+			<div class="stream-meta">
+				<h2 class="display-name">{{display_name}}<span class="stream-viewers">{{viewerCount}}</span></h2>
+				<p class="stream-status">{{status}}</p>
+			</div>
+
+		</div>
+	</script>
+	<script type="text/template" id="offline-stream-lister">
+		<div class="streamer" id={{channelName}}>
+			<div id={{logoid}} class="stream-logo grayscale"></div>
+			<div class="stream-meta">
+				<h2 class="display-name">{{display_name}}</h2>
+				<p class="stream-status">{{status}}</p>
+			</div>
+
+		</div>
+	</script>
+	<div id = "streamer-list">
+		<!--Template from above prints here-->
+
+	</div>					
+	<div id="offline-list">
+		<h2 class="online-offline"><span class = "glyphicon glyphicon-stop"></span><span class="hide-small"> Offline</span></h2>
+	</div>
+</div>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>	
+<script type="text/javascript" src="js/handlebars-v1.3.0.js"></script>	
+<script type="text/javascript" src="js/main.min.js"></script>	
 </body>
 </html>

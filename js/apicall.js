@@ -174,6 +174,7 @@ for (var i in loadedStreams){
 }
 
 function setStreamSize() {
+	if (1 === 2){
 	var winWidth = $('#stream-area').innerWidth();
 	var sidebarwidth = $(".streamer-list").width();
 	var chatWidth = $(".stream-chat").width();
@@ -185,6 +186,7 @@ function setStreamSize() {
 		$('#live_embed_player_flash').width(winWidth);
 		$('#live_embed_player_flash').height(winHeight);
 		$('.stream-chat').height(winHeight);
+	}
 	}
 }
 
