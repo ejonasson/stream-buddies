@@ -314,7 +314,13 @@ function fullOrMinStreams(){
 	}
 }
 
-
+function resetDivWidth(div){
+	var sidebar = $('#streamer-list').width();
+	var chat = $('#stream-chat-area').width();
+	var wrapper = $('.wrapper').width();
+	var computedWidth = wrapper - chat - sidebar;
+	return computedWidth;
+}
 //Keep incomplete functions down here
 
 
