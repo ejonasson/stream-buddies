@@ -163,31 +163,17 @@ function changeStream(streamer){
 	var template = Handlebars.compile(source);
 // Get loaded stream object
 for (var i in loadedStreams){
-	var sidebarwidth = $(".streamer-list").width();
 	if (loadedStreams[i]['channelName'] === streamer){
 		var streamObj = loadedStreams[i];
 		$('#stream-area').html(template(streamObj));
-		setStreamSize();
-		$('.stream-box').css('left', sidebarwidth);
+			resetDivWidth();
 	}
 }
 }
 
 function setStreamSize() {
-	if (1 === 2){
-	var winWidth = $('#stream-area').innerWidth();
-	var sidebarwidth = $(".streamer-list").width();
-	var chatWidth = $(".stream-chat").width();
-	winWidth = Math.floor(winWidth - sidebarwidth - chatWidth - 500);
-	//temporary fix until I find a cleaner solution
-	var winHeight = Math.floor(winWidth*0.61);
-	//Prevent Window from Getting Unreasonably small
-	if(winWidth > 300){
-		$('#live_embed_player_flash').width(winWidth);
-		$('#live_embed_player_flash').height(winHeight);
-		$('.stream-chat').height(winHeight);
-	}
-	}
+	
+
 }
 
 
@@ -276,7 +262,7 @@ $(document).ready(function() {
 	});
 setStreamSize();
 $(window).resize(function(){
-	setStreamSize();
+		resetDivWidth();
 
 });
 $(document).on('click', '.show-hide-streams', function(){
@@ -293,7 +279,7 @@ function fullOrMinStreams(){
 			$('.streamer-list').animate({
 				width: widthChange,
 			}, 100, function(){
-				setStreamSize();
+				resetDivWidth();
 				$('.stream-box').css("left", widthChange);
 				$('.hide-small').css("display", "none");
 			});
@@ -306,7 +292,7 @@ function fullOrMinStreams(){
 			$('.streamer-list').animate({
 				width: widthChange,
 			}, 100, function(){
-				setStreamSize();
+				resetDivWidth();
 				$('.stream-box').css("left", streamBoxWidth);
 				$('.hide-small').css("display", "inline");
 				});
@@ -318,9 +304,13 @@ function resetDivWidth(div){
 	var sidebar = $('#streamer-list').width();
 	var chat = $('#stream-chat-area').width();
 	var wrapper = $('.wrapper').width();
-	var computedWidth = wrapper - chat - sidebar;
-	return computedWidth;
-}
+	var padding = 50;
+	var computedWidth = wrapper - chat - sidebar - padding;
+	var computedHeight = Math.floor(computedWidth * 0.61);
+	$('#stream-area').width(computedWidth);
+	$('#stream-area').height(computedHeight);
+
+	}
 //Keep incomplete functions down here
 
 
