@@ -149,7 +149,6 @@ footer{
 
 .header-fixed{
 	width: 100%;
-	padding-left: 300px;
 	margin-right: 0px;
 	height: 53px;
 	background-color: @background-color;
@@ -180,7 +179,7 @@ footer{
 	margin-right: 10px;
 	cursor: pointer;
 	margin-top: 5px;
-	margin-left:20px;
+	margin-left:10px;
 	color: @stream-idle;
 	font-size: 32px;
 		:hover{
@@ -193,7 +192,9 @@ footer{
 }
 
 .searchbox{
-	position:relative;
+	position:absolute;
+	top: 0;
+	right: 0;
 	padding-top: 4px;}
 
 //Self-Containing Elements
@@ -266,4 +267,13 @@ footer{
 	display: none;
 }
 
+.filter-streams{
+	cursor: pointer;
 
+}
+
+#stream-filter{
+	display: inline;
+	color: @background-color;
+	width: 69%;
+}
