@@ -161,11 +161,14 @@ function changeStream(streamer){
 	// Since we have the streamObject already loaded at this point, we can just compare the id to that and load it
 	var source = $('#stream-embed').html();
 	var template = Handlebars.compile(source);
+	var chatSource = $("#stream-chat-embed").html();
+	var chatTemplate = Handlebars.compile(chatSource);
 // Get loaded stream object
 for (var i in loadedStreams){
 	if (loadedStreams[i]['channelName'] === streamer){
 		var streamObj = loadedStreams[i];
 		$('#stream-area').html(template(streamObj));
+		$('#stream-chat-area').html(chatTemplate(streamObj));
 			resetDivWidth();
 	}
 }
