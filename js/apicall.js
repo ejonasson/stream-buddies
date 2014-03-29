@@ -64,7 +64,9 @@ function showOnline(streamArray){
 			logoid		: streamArray.name + "-logo",
 			display_name: streamArray.display_name,
 			online     :  false,
-			already_loaded: false
+			already_loaded: false,
+			metaID		: streamArray.name + "-meta",
+			viewers 	: data['stream']['viewers']
 		};
 
 			if (data.stream !== null){
@@ -103,11 +105,22 @@ function addStream(streamObj){
 	}
 }
 
+function sortLoaded(a, b){
+	if (a.viewers === b.viewers){
+		return 0;
+	} else if (b.viewers > a.viewers){
+		return 1;
+	}
+	return -1;
+}
+
 function loadStreamFromObject() {
+	loadedStreams.sort(sortLoaded);
+	console.log("sorted");
+	console.log(loadedStreams);
 	for (var i in loadedStreams){
-		if (loadedStreams[i]['already_loaded']){
-			//Don't Load Streams that are already loaded
-			// This needs to append new data to the existing entry
+		if (loadedStreams[i]['already_loaded'] && loadedStreams[i]['online']){
+
 		}
 		else{
 			// Add Language here to load unloaded stream
@@ -129,6 +142,20 @@ function loadStreamFromObject() {
 			}
 			loadedStreams[i]['already_loaded'] = true;
 
+		}
+	}
+}
+
+function refreshStreamData(){
+		for (var i in loadedStreams){
+		if (loadedStreams[i]['already_loaded'] && loadedStreams[i]['online']){
+			//Don't Load Streams that are already loaded
+			// This needs to append new data to the existing entry
+			var source = $('#stream-refresh').html();
+			var template = Handlebars.compile(source);
+			var thisStream = loadedStreams[i];
+			var thisStreamID = "#" + thisStream.metaID;
+			$(thisStreamID).html(template(thisStream));
 		}
 	}
 }
@@ -174,13 +201,6 @@ for (var i in loadedStreams){
 }
 }
 
-function setStreamSize() {
-	
-
-}
-
-
-
 //Trigger if we fail to find streams
 function noStreams(){
 
@@ -195,6 +215,17 @@ function noStreams(){
 	}
 }
 
+function resetDivWidth(div){
+	var sidebar = $('#streamer-list').width();
+	var chat = $('#stream-chat-area').width();
+	var wrapper = $('.wrapper').width();
+	var padding = 50;
+	var computedWidth = wrapper - chat - sidebar - padding;
+	var computedHeight = Math.floor(computedWidth * 0.61);
+	$('#stream-area').width(computedWidth);
+	$('#stream-area').height(computedHeight);
+
+	}
 
 // OTHER FUNCTIONS
 
@@ -255,7 +286,8 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
-	setInterval(loadStreamFromObject, 100);
+	setInterval(loadStreamFromObject, 300);
+	setInterval(refreshStreamData, 100000);
 	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
@@ -319,19 +351,25 @@ function fullOrMinStreams(){
 	}
 }
 
-function resetDivWidth(div){
-	var sidebar = $('#streamer-list').width();
-	var chat = $('#stream-chat-area').width();
-	var wrapper = $('.wrapper').width();
-	var padding = 50;
-	var computedWidth = wrapper - chat - sidebar - padding;
-	var computedHeight = Math.floor(computedWidth * 0.61);
-	$('#stream-area').width(computedWidth);
-	$('#stream-area').height(computedHeight);
 
-	}
 //Keep incomplete functions down here
 
+function sortObject(){
+	var sortedStreams = [];
+	for (var i in loadedStreams){
+		if (sortedStreams.length > 0)
+		{
+			for (var j in sortedStreams){
+				if (sortedStreams[i]['viewers'] > sortedStreams[j]['viewers']){
 
+				}
+			}
+		}
+		else{
+			sortedStreams.push(loadedStreams[i])
+		}	
+	}
+	loadedStreams = sortedStreams;
+}
 
 
