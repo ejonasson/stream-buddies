@@ -50,10 +50,10 @@
 	</div>
 
 	<div class="streamer-list">
-		<div class="show-hide-streams pull-right">	
+		<div class="show-hide-streams pull-right" id="show-hide-streams" >	
 				<span class = "glyphicon glyphicon-chevron-left"></span>
 		</div>
-		<h2 class="online-offline">Online</h2>
+		<h2 class="online-offline"><span class = "glyphicon glyphicon-facetime-video"></span> Online</h2>
 		<script type="text/template" id="stream-lister">
 		<div class="streamer" id={{channelName}}>
 			<div id={{logoid}} class="stream-logo"></div>
@@ -69,7 +69,7 @@
 
 		</div>					
 		<div id="offline-list">
-			<h2 class="online-offline">Offline</h2>
+			<h2 class="online-offline"><span class = "glyphicon glyphicon-stop"></span> Offline</h2>
 			<script type="text/template" id="offline-stream-lister">
 			<div class="streamer" id={{name}}>
 			<div id={{logoid}} class="stream-logo"></div>

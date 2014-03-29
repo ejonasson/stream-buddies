@@ -166,7 +166,9 @@ for (var i in loadedStreams){
 
 function setStreamSize() {
 	var winWidth = $('#stream-area').innerWidth();
-	winWidth = Math.floor(winWidth - 825);
+	var sidebarwidth = $(".streamer-list").width();
+	var chatWidth = $(".stream-chat").width();
+	winWidth = Math.floor(winWidth - sidebarwidth - chatWidth - 50);
 	//temporary fix until I find a cleaner solution
 	var winHeight = Math.floor(winWidth*0.61);
 	//Prevent Window from Getting Unreasonably small
@@ -267,18 +269,36 @@ $(window).resize(function(){
 	setStreamSize();
 
 });
-
+$(document).on('click', '.show-hide-streams', function(){
+		fullOrMinStreams();
 });
+});
+
+function fullOrMinStreams(){
+	var list = $('.streamer-list');
+	if (list.width() > 300){
+		if (!list.is(':animated')){
+			$('.streamer-list').animate({
+				width: "50px",
+			}, 300, function(){
+				setStreamSize();
+			});
+		}
+	}
+	else{
+		if (!list.is(':animated')){
+			$('.streamer-list').animate({
+				width: "450px",
+			}, 300, function(){
+				setStreamSize();}
+				);
+		}
+	}
+}
+
 
 //Keep incomplete functions down here
 
 
-function takeStreamOffline(streamObj){
-
-}
-
-function takeStreamOnline(){
-
-}
 
 
