@@ -266,6 +266,18 @@ $(document).ready(function() {
 setStreamSize();
 $(window).resize(function(){
 		resetDivWidth();
+		// If window is small and sidebar is big, trigger
+		if ($(window).width() < 1000){
+			if ($('.streamer-list').width() > 50){
+			fullOrMinStreams();
+			}
+		}
+		//if window is big and sidebar is small, trigger
+ 		if ($(window).width() >= 1000){
+			if ($('.streamer-list').width() < 100){
+			fullOrMinStreams();
+			}
+		}
 
 });
 $(document).on('click', '.show-hide-streams', function(){
@@ -285,6 +297,8 @@ function fullOrMinStreams(){
 				resetDivWidth();
 				$('.stream-box').css("left", widthChange);
 				$('.hide-small').css("display", "none");
+				$('.show-small').css("display", "inline");
+
 			});
 		}
 	}
@@ -298,6 +312,8 @@ function fullOrMinStreams(){
 				resetDivWidth();
 				$('.stream-box').css("left", streamBoxWidth);
 				$('.hide-small').css("display", "inline");
+				$('.show-small').css("display", "none");
+
 				});
 		}
 	}
