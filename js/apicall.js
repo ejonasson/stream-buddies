@@ -298,7 +298,11 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
-	setInterval(loadStreamFromObject, 300);
+
+	setTimeout(loadStreamFromObject, 500);
+	setTimeout(loadStreamFromObject, 1000);
+	setTimeout(loadStreamFromObject, 2000);
+	setInterval(loadStreamFromObject, 50000)
 	setInterval(refreshStreamData, 100000);
 	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
