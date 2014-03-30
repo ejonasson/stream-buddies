@@ -54,6 +54,7 @@ function showOnline(streamArray){
 		dataType: 'jsonp',
 		cache: true,
 		success: function(data) {
+
 			var streamObj = {
 
 			channelName : streamArray.name,
@@ -66,7 +67,7 @@ function showOnline(streamArray){
 			online     :  false,
 			already_loaded: false,
 			metaID		: streamArray.name + "-meta",
-			viewers 	: data['stream']['viewers']
+			viewers 	:  removeBadData(data['stream'])
 		};
 
 			if (data.stream !== null){
@@ -75,6 +76,15 @@ function showOnline(streamArray){
 			addStream(streamObj);
 		}
 	});
+}
+
+// turn undefineds into zeroes
+
+function removeBadData(data){
+	if (data === null){
+		return 0;
+	}
+	return data.viewers;
 }
 
 // DOM MANIPULATION FUNCTIONS
@@ -102,8 +112,10 @@ function addStream(streamObj){
 	}
 	if(!loaded){
 		loadedStreams.push(streamObj);	
+		console.log(loadedStreams);
 	}
 }
+
 
 function sortLoaded(a, b){
 	if (a.viewers === b.viewers){
@@ -253,7 +265,7 @@ function findUser(){
 function useJSON(JSON){
 	console.log(JSON);
 	var follows = JSON.follows;
-	for (var i = 0; i<follows.length; i++){
+	for (var i in follows){
 		var streamArray = follows[i].channel;
 		showOnline(streamArray);
 	}
@@ -295,7 +307,7 @@ $(document).ready(function() {
 		var streamerID = this.getAttribute('id');
 		changeStream(streamerID);
 	});
-setStreamSize();
+		resetDivWidth();
 $(window).resize(function(){
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
