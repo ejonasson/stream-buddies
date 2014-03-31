@@ -315,7 +315,7 @@ $(document).ready(function() {
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
 		if ($(window).width() < 1000){
-			if ($('.streamer-list').width() > 50){
+			if ($('.streamer-list').width() > 65){
 				fullOrMinStreams();
 			}
 		}
@@ -336,7 +336,7 @@ function fullOrMinStreams(){
 	var widthChange = 0;
 	var list = $('.streamer-list');
 	if (list.width() === streamBoxWidth){
-		widthChange = 50;
+		widthChange = 65;
 		if (!list.is(':animated')){
 			$('.streamer-list').animate({
 				width: widthChange,
