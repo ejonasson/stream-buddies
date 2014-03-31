@@ -131,7 +131,7 @@ function loadStreamFromObject() {
 	console.log("sorted");
 	console.log(loadedStreams);
 	for (var i in loadedStreams){
-		if (loadedStreams[i]['already_loaded'] && loadedStreams[i]['online']){
+		if (loadedStreams[i]['already_loaded']){
 
 		}
 		else{
