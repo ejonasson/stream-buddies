@@ -369,22 +369,5 @@ function fullOrMinStreams(){
 
 //Keep incomplete functions down here
 
-function sortObject(){
-	var sortedStreams = [];
-	for (var i in loadedStreams){
-		if (sortedStreams.length > 0)
-		{
-			for (var j in sortedStreams){
-				if (sortedStreams[i]['viewers'] > sortedStreams[j]['viewers']){
-
-				}
-			}
-		}
-		else{
-			sortedStreams.push(loadedStreams[i])
-		}	
-	}
-	loadedStreams = sortedStreams;
-}
 
 
