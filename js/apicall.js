@@ -57,18 +57,18 @@ function showOnline(streamArray){
 
 			var streamObj = {
 
-			channelName : streamArray.name,
-			viewerCount : viewerCount(data['stream']),
-			game		: streamArray.game,
-			status		: streamArray.status,
-			logo		: streamArray.logo,
-			logoid		: streamArray.name + "-logo",
-			display_name: streamArray.display_name,
-			online     :  false,
-			already_loaded: false,
-			metaID		: streamArray.name + "-meta",
-			viewers 	:  removeBadData(data['stream'])
-		};
+				channelName : streamArray.name,
+				viewerCount : viewerCount(data['stream']),
+				game		: streamArray.game,
+				status		: streamArray.status,
+				logo		: streamArray.logo,
+				logoid		: streamArray.name + "-logo",
+				display_name: streamArray.display_name,
+				online     :  false,
+				already_loaded: false,
+				metaID		: streamArray.name + "-meta",
+				viewers     :  removeBadData(data['stream'])
+			};
 
 			if (data.stream !== null){
 				streamObj.online = true;
@@ -98,9 +98,9 @@ function addStream(streamObj){
 			//Reset if online has changed
 			if (loadedStreams[i].online !== streamObj.online)
 			{
-					$(thisStreamID).remove();
-					streamObj.already_loaded = false;
-					loadedStreams[i] = streamObj;
+				$(thisStreamID).remove();
+				streamObj.already_loaded = false;
+				loadedStreams[i] = streamObj;
 
 			}
 			else{
@@ -111,7 +111,7 @@ function addStream(streamObj){
 		}
 	}
 	if(!loaded){
-		loadedStreams.push(streamObj);	
+		loadedStreams.push(streamObj);
 		console.log(loadedStreams);
 	}
 }
@@ -159,15 +159,14 @@ function loadStreamFromObject() {
 }
 
 function refreshStreamData(){
-		for (var i in loadedStreams){
-		if (loadedStreams[i]['already_loaded'] && loadedStreams[i]['online']){
-			//Don't Load Streams that are already loaded
-			// This needs to append new data to the existing entry
+	for (var i in loadedStreams){
+		if (loadedStreams[i]['already_loaded']){
 			var source = $('#stream-refresh').html();
 			var template = Handlebars.compile(source);
 			var thisStream = loadedStreams[i];
-			var thisStreamID = "#" + thisStream.metaID;
+			var thisStreamID = "#" + thisStream.channelName;
 			$(thisStreamID).html(template(thisStream));
+			addStreamerImage(thisStream);
 		}
 	}
 }
@@ -208,7 +207,7 @@ for (var i in loadedStreams){
 		var streamObj = loadedStreams[i];
 		$('#stream-area').html(template(streamObj));
 		$('#stream-chat-area').html(chatTemplate(streamObj));
-			resetDivWidth();
+		resetDivWidth();
 	}
 }
 }
@@ -237,7 +236,7 @@ function resetDivWidth(div){
 	$('#stream-area').width(computedWidth);
 	$('#stream-area').height(computedHeight);
 
-	}
+}
 
 // OTHER FUNCTIONS
 
@@ -277,14 +276,14 @@ function viewerCount(data){
 	if(data !== null){
 
 
-	if (data['viewers'] ==1){
-		var string = "1 viewer";
-		return string;
-	}
-	else{
-		var viewString = data['viewers'] + " viewers";
-		return viewString;
-	}
+		if (data['viewers'] ==1){
+			var string = "1 viewer";
+			return string;
+		}
+		else{
+			var viewString = data['viewers'] + " viewers";
+			return viewString;
+		}
 	}
 	return null;
 }
@@ -299,10 +298,10 @@ $(document).ready(function() {
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
 
-	setTimeout(loadStreamFromObject, 500);
-	setTimeout(loadStreamFromObject, 1000);
-	setTimeout(loadStreamFromObject, 2000);
-	setInterval(loadStreamFromObject, 50000)
+	for(var i = 1; i <=5; i++){
+		var timeout = i * 500;
+		setTimeout(loadStreamFromObject, timeout);
+	}
 	setInterval(refreshStreamData, 100000);
 	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
@@ -311,26 +310,26 @@ $(document).ready(function() {
 		var streamerID = this.getAttribute('id');
 		changeStream(streamerID);
 	});
-		resetDivWidth();
-$(window).resize(function(){
+	resetDivWidth();
+	$(window).resize(function(){
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
 		if ($(window).width() < 1000){
 			if ($('.streamer-list').width() > 50){
-			fullOrMinStreams();
+				fullOrMinStreams();
 			}
 		}
 		//if window is big and sidebar is small, trigger
- 		if ($(window).width() >= 1000){
+		if ($(window).width() >= 1000){
 			if ($('.streamer-list').width() < 100){
-			fullOrMinStreams();
+				fullOrMinStreams();
 			}
 		}
 
-});
-$(document).on('click', '.show-hide-streams', function(){
+	});
+	$(document).on('click', '.show-hide-streams', function(){
 		fullOrMinStreams();
-});
+	});
 });
 
 function fullOrMinStreams(){
@@ -362,7 +361,7 @@ function fullOrMinStreams(){
 				$('.hide-small').css("display", "inline");
 				$('.show-small').css("display", "none");
 
-				});
+			});
 		}
 	}
 }
