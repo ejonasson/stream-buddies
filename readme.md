@@ -12,12 +12,11 @@ Pre-Launch Development. Features core to the basic functionality of the site are
 * Constantly update as new streamers come online - no need to refresh
 * Enter your username into a query string to go to your page (eg: streambuddies.com/index.html?name="YOURTWITCHNAME HERE")
 * Add a search box to make it easy to get to your page
+* Streams move from online to offline and vice versa
 
 ## Features Planned for Release
 
 * Replace query string with forwarding to subdirectory (eg ?name="SpartanERK" becomes /SpartanERK)
-* Finalize page design (current design is a placeholder)
-* Streams move from online to offline and vice versa
 * easy social media integration - tweet your page and who you're watching
 
 ## Features Planned for Post-Release
