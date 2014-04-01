@@ -9,7 +9,7 @@ var toggleOverride = false;
 
 //This is used in mulitple places, put up here for easy change
 var streamBoxWidth = 316;
-
+var streamChatWidth = 320;
 // Putting any language we need to pass up here for easier reference
 
 var notFound = "No Online Streams were found.";
@@ -329,11 +329,11 @@ $(document).ready(function() {
 	//Toggle chat
 	$(document).on('click', '#chat-toggle', function(){
 		var chat = $('#stream-chat-area');
-		if (chat.css("display") === "none"){
-			chat.css("display", "block")
+		if (chat.width() === streamChatWidth){
+			chat.width(0);
 		}			
 		else {
-			chat.css("display", "none");
+			chat.width(streamChatWidth);
 		}
 		resetDivWidth();
 	});
