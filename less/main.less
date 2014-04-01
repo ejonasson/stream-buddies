@@ -37,12 +37,12 @@
 @hover-stream-grad-mid: darken(@stream-grad-mid, 10%);
 @hover-stream-grad-end: darken(@stream-grad-end, 10%);
 
-@streamer-button-width: 300px;
-@streamer-collapsed-button-width: 50px;
+@streamer-button-width: 315px;
+@streamer-collapsed-button-width: 65px;
 
 
 @top-bar-height: 50px;
-@chat-height: 40px;
+@chat-height: 67px;
 @gap-from-header-to-stream: 82px;
 
 
@@ -69,9 +69,7 @@ header{
 	background-color: @background-color;
 	h1{
 		margin-top: 0;
-		small{
-			font-size: ceil(@font-size-h1 * .5);
-		}
+
 	}
 
 }
@@ -138,7 +136,7 @@ footer{
 	height: 100%;
 }
 .stream-chat{
-	margin-top : 5px;
+	margin-top : @chat-height;
 	height: 82%;
 }
 
@@ -225,8 +223,7 @@ footer{
 	float: right;
 	font-size: 12pt;
 	padding-right: 20px;
-	//avoids hover 100% height issue
-	height: 17px;
+	margin-top: 5px;
 	}
 .stream-status{
 	font-size: 14px;
@@ -278,9 +275,18 @@ footer{
 #stream-filter{
 	display: inline;
 	color: @background-color;
-	width: 69%;
+	width: 65%;
+	.border-radius(5px);
 }
 
 .selected-stream {
 	background-color: darken(@stream-idle, 20%);
+}
+
+.chat-button{
+	position: relative;
+	float: right;
+	top: 10px;
+	margin-right: 12px;
+	z-index: 5;
 }

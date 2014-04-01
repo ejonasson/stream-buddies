@@ -314,18 +314,30 @@ $(document).ready(function() {
 	$(window).resize(function(){
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
-		if ($(window).width() < 1000){
-			if ($('.streamer-list').width() > 65){
+		if ($(window).width() < 1200){
+			if ($('.streamer-list').width() > 100){
 				fullOrMinStreams();
 			}
 		}
 		//if window is big and sidebar is small, trigger
-		if ($(window).width() >= 1000){
+		if ($(window).width() >= 1200){
 			if ($('.streamer-list').width() < 100){
 				fullOrMinStreams();
 			}
 		}
 
+	});
+	//Toggle chat
+	$(document).on('click', '#chat-toggle', function(){
+		var chat = $('#stream-chat-area');
+		if (!chat.is(':animated')){
+			chat.animate({
+				width: "toggle",
+		}, 100, function(){
+			resetDivWidth();
+		});
+
+		}
 	});
 	$(document).on('click', '.show-hide-streams', function(){
 		fullOrMinStreams();
