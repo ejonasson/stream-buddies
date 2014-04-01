@@ -4,21 +4,32 @@ var theUser = findUser();
 var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
-var showingStream = false;
-var toggleOverride = false;
 
-//This is used in mulitple places, put up here for easy change
-var streamBoxWidth = 316;
-var streamChatWidth = 320;
-// Putting any language we need to pass up here for easier reference
 
-var notFound = "No Online Streams were found.";
-var error = "Twitch is taking longer than expected to respond.  Try refreshing your browser.";
-var invalidUser = "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.";
+// Specific DOM Element Dimensions used in Script
+var dimension = {
+	streamBoxWidth : 315,
+	streamChatWidth : 320
+};
+
+
+//States of the Page - determines if certain functions trigger
+var state = {
+	showingStream : false,
+	toggleOverride : false
+};
+
+
+// Error message strings
+var error = {
+	notFound	: "No Online Streams were found.",
+	twitchError	: "Twitch is taking longer than expected to respond. Try refreshing your browser.",
+	invalidUser	: "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.",
+};
 
 //AJAX FUNCTIONS
 function queryTwitch(){
-	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(error, status) {
+	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(status) {
 		$.ajax({
 			url: followsUrl,
 			type: 'GET',
@@ -29,12 +40,12 @@ function queryTwitch(){
 			},
 			success: function(data) {
 				if(data.status === 404){
-					$('#header-message').html(invalidUser);
+					$('#header-message').html(error.invalidUser);
 					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
-					showingStream = true;
+					state.showingStream = true;
 					return false;
 				}
-				useJSON(data);
+				useStreams(data);
 
 			},
 
@@ -183,10 +194,10 @@ function loadFirstStream(streamObj){
 	var getFirstStreamID = $( "#streamer-list > :first-child").attr('id');
 	if (getFirstStreamID == streamObj.channelName){
 		// Turn stream ID into an actual ID
-		if(!showingStream)
+		if(!state.showingStream)
 		{
 			var FirstOnlineStreamID = "#" + getFirstStreamID;
-			showingStream = true;
+			state.showingStream = true;
 			changeStream(streamObj.channelName);
 			$(FirstOnlineStreamID).addClass('selected-stream');
 		}
@@ -215,12 +226,12 @@ for (var i in loadedStreams){
 //Trigger if we fail to find streams
 function noStreams(){
 
-	if (!showingStream){
+	if (!state.showingStream){
 		if (loadedStreams.length > 0){
-			$('#header-message').html(notFound);
+			$('#header-message').html(error.notFound);
 		}
 		else{
-			$('#header-message').html(error);
+			$('#header-message').html(error.twitchError);
 
 		}
 	}
@@ -251,6 +262,8 @@ function getQueryVariable(variable)
 	}
 	return(false);
 }
+
+// Find and return a User
 function findUser(){
 	var username = "spartanerk";
 	var queryname = getQueryVariable("name");
@@ -261,9 +274,9 @@ function findUser(){
 }
 
 //Function to call the API based on other input data
-function useJSON(JSON){
-	console.log(JSON);
-	var follows = JSON.follows;
+function useStreams(followedStream){
+	console.log(followedStream);
+	var follows = followedStream.follows;
 	for (var i in follows){
 		var streamArray = follows[i].channel;
 		showOnline(streamArray);
@@ -311,7 +324,7 @@ $(document).ready(function() {
 	$(window).resize(function(){
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
-		if (!toggleOverride){
+		if (!state.toggleOverride){
 			if ($(window).width() < 1000){
 				if ($('.streamer-list').width() > 100){
 					fullOrMinStreams();
@@ -325,20 +338,25 @@ $(document).ready(function() {
 			}
 		}
 	}
+
+
 });
+	$('#stream-filter').keypress(function(){
+		// Put Filter Function here
+	});
 	//Toggle chat
 	$(document).on('click', '#chat-toggle', function(){
 		var chat = $('#stream-chat-area');
-		if (chat.width() === streamChatWidth){
+		if (chat.width() === dimension.streamChatWidth){
 			chat.width(0);
-		}			
+		}
 		else {
-			chat.width(streamChatWidth);
+			chat.width(dimension.streamChatWidth);
 		}
 		resetDivWidth();
 	});
 	$(document).on('click', '.show-hide-streams', function(){
-		toggleOverride = true;
+		state.toggleOverride = true;
 		fullOrMinStreams();
 	});
 });
@@ -346,7 +364,7 @@ $(document).ready(function() {
 function fullOrMinStreams(){
 	var widthChange = 0;
 	var list = $('.streamer-list');
-	if (list.width() === streamBoxWidth){
+	if (list.width() === dimension.streamBoxWidth){
 		widthChange = 65;
 		if (!list.is(':animated')){
 			$('.streamer-list').animate({
@@ -361,14 +379,14 @@ function fullOrMinStreams(){
 		}
 	}
 	else{
-		widthChange = streamBoxWidth;
+		widthChange = dimension.streamBoxWidth;
 
 		if (!list.is(':animated')){
 			$('.streamer-list').animate({
 				width: widthChange,
 			}, 100, function(){
 				resetDivWidth();
-				$('.stream-box').css("left", streamBoxWidth);
+				$('.stream-box').css("left", dimension.streamBoxWidth);
 				$('.hide-small').css("display", "inline");
 				$('.show-small').css("display", "none");
 
