@@ -5,10 +5,10 @@ var theURL = "https://api.twitch.tv/kraken/";
 var followsUrl = theURL + "users/" + theUser + "/follows/channels";
 var streamUrl = theURL + "streams/";
 var showingStream = false;
-
+var toggleOverride = false;
 
 //This is used in mulitple places, put up here for easy change
-var streamBoxWidth = 300;
+var streamBoxWidth = 316;
 
 // Putting any language we need to pass up here for easier reference
 
@@ -297,11 +297,8 @@ $(document).ready(function() {
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
 	queryTwitch();
 	setInterval(queryTwitch, 100000);
-
-	for(var i = 1; i <=5; i++){
-		var timeout = i * 500;
-		setTimeout(loadStreamFromObject, timeout);
-	}
+	setTimeout(loadStreamFromObject, 500);
+	setInterval(loadStreamFromObject, 1000);
 	setInterval(refreshStreamData, 100000);
 	setTimeout(noStreams, 7000);
 	$(document).on('click', '.streamer', function(){
@@ -314,32 +311,34 @@ $(document).ready(function() {
 	$(window).resize(function(){
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
-		if ($(window).width() < 1200){
-			if ($('.streamer-list').width() > 100){
-				fullOrMinStreams();
+		if (!toggleOverride){
+			if ($(window).width() < 1000){
+				if ($('.streamer-list').width() > 100){
+					fullOrMinStreams();
+				}
 			}
-		}
 		//if window is big and sidebar is small, trigger
-		if ($(window).width() >= 1200){
+
+		if ($(window).width() >= 1000){
 			if ($('.streamer-list').width() < 100){
 				fullOrMinStreams();
 			}
 		}
-
-	});
+	}
+});
 	//Toggle chat
 	$(document).on('click', '#chat-toggle', function(){
 		var chat = $('#stream-chat-area');
-		if (!chat.is(':animated')){
-			chat.animate({
-				width: "toggle",
-		}, 100, function(){
-			resetDivWidth();
-		});
-
+		if (chat.css("display") === "none"){
+			chat.css("display", "block")
+		}			
+		else {
+			chat.css("display", "none");
 		}
+		resetDivWidth();
 	});
 	$(document).on('click', '.show-hide-streams', function(){
+		toggleOverride = true;
 		fullOrMinStreams();
 	});
 });
