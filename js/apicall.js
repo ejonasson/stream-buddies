@@ -10,21 +10,21 @@ var streamUrl = theURL + "streams/";
 var dimension = {
 	streamBoxWidth : 315,
 	streamChatWidth : 270
-};
+	};
 
 
 //States of the Page - determines if certain functions trigger
 var state = {
 	showingStream : false,
 	toggleOverride : false
-};
+	};
 
 
 // Error message strings
 var error = {
-	notFound	: "No Online Streams were found.",
-	twitchError	: "Twitch is taking longer than expected to respond. Try refreshing your browser.",
-	invalidUser	: "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.",
+	notFound : "No Online Streams were found.",
+	twitchError : "Twitch is taking longer than expected to respond. Try refreshing your browser.",
+	invalidUser : "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.",
 };
 
 //AJAX FUNCTIONS
@@ -56,7 +56,6 @@ function queryTwitch(){
 function showOnline(streamArray){
 	var name = streamArray.name;
 	var userURL = streamUrl + name;
-	var streamViewers = 0;
 	//reset stream list for new import
 	$.ajax({
 		url: userURL,
@@ -70,15 +69,15 @@ function showOnline(streamArray){
 
 				channelName : streamArray.name,
 				viewerCount : viewerCount(data['stream']),
-				game		: streamArray.game,
-				status		: streamArray.status,
-				logo		: streamArray.logo,
-				logoid		: streamArray.name + "-logo",
-				display_name: streamArray.display_name,
-				online     :  false,
-				already_loaded: false,
-				metaID		: streamArray.name + "-meta",
-				viewers     :  removeBadData(data['stream'])
+				game        : streamArray.game,
+				status      : streamArray.status,
+				logo        : streamArray.logo,
+				logoid      : streamArray.name + "-logo",
+				display_name : streamArray.display_name,
+				online       : false,
+				already_loaded : false,
+				metaID       : streamArray.name + "-meta",
+				viewers      :  removeBadData(data['stream'])
 			};
 
 			if (data.stream !== null){
@@ -234,7 +233,7 @@ function noStreams(){
 	}
 }
 
-function resetDivWidth(div){
+function resetDivWidth(){
 	var sidebar = $('#streamer-list').width();
 	var chat = $('#stream-chat-area').width();
 	var wrapper = $('.wrapper').width();
@@ -351,8 +350,8 @@ $(document).ready(function() {
 			var stream = loadedStreams[j];
 			if (!regFilter.test(stream.channelName) && (!regFilter.test(stream.status)))
 			{
-				var channelID = "#" + loadedStreams[j]['channelName'];
-				$(channelID).hide();
+				var thisChannelID = "#" + loadedStreams[j]['channelName'];
+				$(thisChannelID).hide();
 			}
 			}
 	});
