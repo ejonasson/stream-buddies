@@ -9,7 +9,7 @@ var streamUrl = theURL + "streams/";
 // Specific DOM Element Dimensions used in Script
 var dimension = {
 	streamBoxWidth : 315,
-	streamChatWidth : 320
+	streamChatWidth : 270
 };
 
 
@@ -123,7 +123,6 @@ function addStream(streamObj){
 	}
 	if(!loaded){
 		loadedStreams.push(streamObj);
-		console.log(loadedStreams);
 	}
 }
 
@@ -139,8 +138,6 @@ function sortLoaded(a, b){
 
 function loadStreamFromObject() {
 	loadedStreams.sort(sortLoaded);
-	console.log("sorted");
-	console.log(loadedStreams);
 	for (var i in loadedStreams){
 		if (loadedStreams[i]['already_loaded']){
 
@@ -275,7 +272,6 @@ function findUser(){
 
 //Function to call the API based on other input data
 function useStreams(followedStream){
-	console.log(followedStream);
 	var follows = followedStream.follows;
 	for (var i in follows){
 		var streamArray = follows[i].channel;
@@ -325,14 +321,14 @@ $(document).ready(function() {
 		resetDivWidth();
 		// If window is small and sidebar is big, trigger
 		if (!state.toggleOverride){
-			if ($(window).width() < 1000){
+			if ($(window).width() < 1200){
 				if ($('.streamer-list').width() > 100){
 					fullOrMinStreams();
 				}
 			}
 		//if window is big and sidebar is small, trigger
 
-		if ($(window).width() >= 1000){
+		if ($(window).width() >= 1200){
 			if ($('.streamer-list').width() < 100){
 				fullOrMinStreams();
 			}
@@ -341,17 +337,36 @@ $(document).ready(function() {
 
 
 });
-	$('#stream-filter').keypress(function(){
+	$('#stream-filter').keyup(function(){
 		// Put Filter Function here
+
+		var filterBox = $('#stream-filter').val();
+		var expression = filterBox;
+		var regFilter = new RegExp(expression, 'i');
+		for (var i in loadedStreams){
+			var channelID = "#" + loadedStreams[i]['channelName'];
+			$(channelID).show();
+		}
+		for (var i in loadedStreams){
+			var stream = loadedStreams[i];
+			if (!regFilter.test(stream.channelName) && (!regFilter.test(stream.status)))
+			{
+				var channelID = "#" + loadedStreams[i]['channelName'];
+				$(channelID).hide();
+			}
+			}
 	});
 	//Toggle chat
 	$(document).on('click', '#chat-toggle', function(){
 		var chat = $('#stream-chat-area');
 		if (chat.width() === dimension.streamChatWidth){
 			chat.width(0);
+			chat.css('display', 'none');
 		}
 		else {
 			chat.width(dimension.streamChatWidth);
+			chat.css('display', 'inline-block');
+
 		}
 		resetDivWidth();
 	});

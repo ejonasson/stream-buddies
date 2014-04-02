@@ -42,7 +42,7 @@
 
 
 @top-bar-height: 50px;
-@chat-height: 15px;
+@chat-height: 55px;
 @gap-from-header-to-stream: 82px;
 
 
@@ -100,12 +100,10 @@ footer{
 }
 
 #stream-area {
-	width: 100%;
 	position: relative;
-	top: 0px;
 	display: inline-block;
-	//Don't think this is doing anything
-	//margin: 0 auto;
+	vertical-align: top;
+	width: 100%;
 }
 
 
@@ -135,17 +133,14 @@ footer{
 	margin-left: 30px;
 	height: 100%;
 }
-.stream-chat{
+.stream-chat-area{
+	position: relative;
+	display: inline-block;
 	margin-top : @chat-height;
-	height: 82%;
-}
-
-
-#stream-chat-area{
-	position: absolute;
+	height: 80.5%;
 	right:0;
-	top: 50px;
-	height: 100%;
+	top: 0;
+
 }
 
 .header-fixed{
