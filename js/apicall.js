@@ -309,7 +309,7 @@ $(document).ready(function() {
 	setTimeout(loadStreamFromObject, 700);
 	setInterval(loadStreamFromObject, 1200);
 	setInterval(refreshStreamData, 100000);
-	setTimeout(noStreams, 7000);
+	setTimeout(noStreams, 3000);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
@@ -347,11 +347,11 @@ $(document).ready(function() {
 			var channelID = "#" + loadedStreams[i]['channelName'];
 			$(channelID).show();
 		}
-		for (var i in loadedStreams){
+		for (var j in loadedStreams){
 			var stream = loadedStreams[i];
 			if (!regFilter.test(stream.channelName) && (!regFilter.test(stream.status)))
 			{
-				var channelID = "#" + loadedStreams[i]['channelName'];
+				var channelID = "#" + loadedStreams[j]['channelName'];
 				$(channelID).hide();
 			}
 			}
