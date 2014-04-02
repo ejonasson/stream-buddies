@@ -17,6 +17,8 @@ Pre-Launch Development. Features core to the basic functionality of the site are
 ## Features Planned for Release
 
 * Replace query string with forwarding to subdirectory (eg ?name="SpartanERK" becomes /SpartanERK)
+* Save the user's stream with a cookie
+
 
 ## Features Planned for Post-Release
 

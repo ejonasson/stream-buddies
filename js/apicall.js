@@ -348,7 +348,7 @@ $(document).ready(function() {
 			$(channelID).show();
 		}
 		for (var j in loadedStreams){
-			var stream = loadedStreams[i];
+			var stream = loadedStreams[j];
 			if (!regFilter.test(stream.channelName) && (!regFilter.test(stream.status)))
 			{
 				var channelID = "#" + loadedStreams[j]['channelName'];
