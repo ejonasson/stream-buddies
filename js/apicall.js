@@ -242,6 +242,7 @@ function resetDivWidth(){
 	var computedHeight = Math.floor(computedWidth * 0.61);
 	$('#stream-area').width(computedWidth);
 	$('#stream-area').height(computedHeight);
+	$('#stream-chat-area').height(computedHeight);
 
 }
 
