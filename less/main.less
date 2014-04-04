@@ -37,9 +37,12 @@
 @hover-stream-grad-mid: darken(@stream-grad-mid, 10%);
 @hover-stream-grad-end: darken(@stream-grad-end, 10%);
 
-@streamer-button-width: 315px;
-@streamer-collapsed-button-width: 65px;
+//CANONICAL WIDTH DECLARATIONS 
 
+@streamer-button-width: 315px;
+@streamer-chat-width: 270px;
+
+@streamer-collapsed-button-width: 65px;
 
 @top-bar-height: 50px;
 @chat-height: 55px;
@@ -106,7 +109,7 @@ footer{
 	width: 100%;
 }
 
-
+// Core List of Streamers
 .streamer-list{
 	//fix scrolling issue
 	position: relative;
@@ -125,14 +128,18 @@ footer{
 
 }
 
+
+
+//Box Which Contains the Stream
 .stream-box{
 	
-//	left: @streamer-button-width;
-//	top: @top-bar-height;
 	margin-top:10px;
 	margin-left: 30px;
 	height: 100%;
 }
+
+
+//The Stream Chat Area
 .stream-chat-area{
 	position: relative;
 	display: inline-block;
@@ -143,6 +150,8 @@ footer{
 
 }
 
+
+// The Header
 .header-fixed{
 	width: 100%;
 	margin-right: 0px;
@@ -153,12 +162,16 @@ footer{
 
 // Sub-Containers
 
+
+//Stream List Area
+
 .streamer{
 	width: @streamer-button-width;
 	height: 50px;
 	cursor: pointer;
 	background-color: @stream-idle;
 	overflow: hidden;
+	.border-radius(5px);
 		h2{
 		font-size: 20px;
 	}
@@ -184,16 +197,13 @@ footer{
 
 }
 
-.selected-stream{
-}
-
 .searchbox{
 	position:absolute;
 	top: 0;
 	right: 0;
 	padding-top: 4px;}
 
-//Self-Containing Elements
+//Self-Contained Elements
 
 //Stream Button Elements
 .stream-logo{
@@ -209,8 +219,6 @@ footer{
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	// I have no idea why this one needs !important, but it does
-	height: 22px !important;
 }
 
 .stream-viewers{
@@ -226,7 +234,6 @@ footer{
 	white-space: nowrap;
 	overflow: hidden;
 	padding-right: 20px;
-	//avoids hover 100% height issue
 	height: 20px;
 
 }
@@ -275,13 +282,10 @@ footer{
 }
 
 .selected-stream {
-	background-color: darken(@stream-idle, 20%);
+	background-color: @stream-selected;
 }
 
 .chat-button{
-//	position: absolute;
-//	top: 65px;
-//	right: 0;
 	margin-right: 10px;
 	margin-left: 20px;
 	z-index: 5;
