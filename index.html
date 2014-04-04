@@ -7,6 +7,30 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
+	<div class="modal fade" id="user-find" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Welcome To StreamBuddies</h3>
+      </div>
+      <div class="modal-body">
+        <p>StreamBuddies is a tool to watch the Twitch streams you or your friends follow. Enter a Twitch name below to get started - you can enter your Twitch name to see the streams you follow - or put your friends name in to see who they follow.</p>
+        <p>To skip this step in the future, you can bookmark your StreamBuddies page and come back to it any time.</p>
+        <p><small>Note: StreamBuddies is still in beta at this point - if you see any issues, send them to the creator on <a href="http://twitter.com/SpartanErk">twitter</a></small>.</p>
+
+      </div>
+       <div class="modal-footer">
+ 
+		<div class="form-group pull-left">
+				<form class="navbar-form" action="" method="get" role="search">
+					<input type="text" class="form-control" name="name" placeholder="Find Twitch Name">
+					<button type="submit" class="btn btn-default">Find</button>
+				</form>	
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
 	<header>
 		<div class="header-fixed">
 
@@ -26,12 +50,16 @@
 
 
 	</header>
+
+
+
+
 	<div class="wrapper">
 		<div class = "main-body stream-width">
 			<script type="text/template" id="stream-embed">
 				<div class="stream-box">
-					<h2>{{status}}</h2>
-					<object type="application/x-shockwave-flash" style="height:100%; width:100%;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=true&start_volume=25" /></object>
+					<h2 id="flash-header">{{status}}</h2>
+					<object type="application/x-shockwave-flash" style="height:100%; width:100%;" class="flash-player" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=true&start_volume=25" /></object>
 				</div>
 			</script>
 			<script type="text/template" id = "stream-chat-embed">
@@ -80,11 +108,11 @@
 					<div class="stream-box">	
 						<h2 id = "header-message">Streams are loading...</h2>
 						<!--Template from above prints here-->
-						<object type="application/x-shockwave-flash" style="height:100%; width:100%;" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=nostreamloaded" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=nostreamloaded&auto_play=true&start_volume=25" /></object>
+	
 					</div>
 				</div>
 			<div id="stream-chat-area" class="stream-chat-area">
-					<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=nostreamloaded&popout_chat=true" style = "height:100%; width: 270px;"></iframe>
+	
 			</div>
 
 		</div>
@@ -103,6 +131,7 @@
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>	
+		<script type="text/javascript" src="js/modal.js"></script>	
 		<script type="text/javascript" src="js/handlebars-v1.3.0.js"></script>	
 		<script type="text/javascript" src="js/apicall.js"></script>	
 	</body>

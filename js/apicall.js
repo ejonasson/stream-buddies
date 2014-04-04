@@ -1,3 +1,10 @@
+//States of the Page - determines if certain functions trigger
+var state = {
+	showingStream : false,
+	toggleOverride : false,
+	haveName : false
+	};
+
 // Global Variable Declarations
 var loadedStreams = [];
 var theUser = findUser();
@@ -13,11 +20,7 @@ var dimension = {
 	};
 
 
-//States of the Page - determines if certain functions trigger
-var state = {
-	showingStream : false,
-	toggleOverride : false
-	};
+
 
 
 // Error message strings
@@ -25,6 +28,7 @@ var error = {
 	notFound : "No Online Streams were found.",
 	twitchError : "Twitch is taking longer than expected to respond. Try refreshing your browser.",
 	invalidUser : "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.",
+	enterStream : "Enter a Twitch ID to Get Started"
 };
 
 //AJAX FUNCTIONS
@@ -221,6 +225,7 @@ for (var i in loadedStreams){
 
 //Trigger if we fail to find streams
 function noStreams(){
+	if (state.haveName){
 
 	if (!state.showingStream){
 		if (loadedStreams.length > 0){
@@ -231,6 +236,11 @@ function noStreams(){
 
 		}
 	}
+
+	}
+	else{
+		$('#header-message').html(error.enterStream);
+	}
 }
 
 function resetDivWidth(){
@@ -240,10 +250,12 @@ function resetDivWidth(){
 	var padding = 50;
 	var computedWidth = wrapper - chat - sidebar - padding;
 	var computedHeight = Math.floor(computedWidth * 0.61);
+	//var embedHeight = $('#flash-header').offset().top;
 	$('#stream-area').width(computedWidth);
 	$('#stream-area').height(computedHeight);
 	$('#stream-chat-area').height(computedHeight);
-
+	//Adjust Margin-top to the new height of the stream
+	//$('#stream-chat-area').css("margin-top", embedHeight);
 }
 
 // OTHER FUNCTIONS
@@ -262,12 +274,14 @@ function getQueryVariable(variable)
 
 // Find and return a User
 function findUser(){
-	var username = "spartanerk";
 	var queryname = getQueryVariable("name");
 	if (queryname){
+		state.haveName = true;
 		return queryname;
 	}
-	return username;
+	$('#user-find').modal();
+	return false;
+
 }
 
 //Function to call the API based on other input data
@@ -309,7 +323,7 @@ $(document).ready(function() {
 	setTimeout(loadStreamFromObject, 700);
 	setInterval(loadStreamFromObject, 1200);
 	setInterval(refreshStreamData, 100000);
-	setTimeout(noStreams, 3000);
+	setTimeout(noStreams, 1300);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
