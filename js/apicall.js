@@ -223,6 +223,7 @@ for (var i in loadedStreams){
 		$('#stream-area').html(template(streamObj));
 		$('#stream-chat-area').html(chatTemplate(streamObj));
 		resetDivWidth();
+		adjustSidebar();
 	}
 }
 }
@@ -259,13 +260,13 @@ function resetDivWidth(){
 
 		}
 		*/
-		if (computedWidth > 500){
+		if (computedWidth > 600){
 			$('#stream-area').width(computedWidth);
 			$('#stream-area').height(computedHeight);
 			//$('#stream-chat-area').height(computedHeight);
 			//Adjust Margin-top to the new height of the stream
 			//$('#stream-chat-area').css("margin-top", embedHeight);
-		}
+	}
 
 	}
 }
@@ -348,23 +349,7 @@ $(document).ready(function() {
 	resetDivWidth();
 	$(window).resize(function(){
 		resetDivWidth();
-		// If window is small and sidebar is big, trigger
-		if (!state.toggleOverride){
-			if ($(window).width() < 1200){
-				if ($('.streamer-list').width() > 100){
-					fullOrMinStreams();
-				}
-			}
-		//if window is big and sidebar is small, trigger
-
-		if ($(window).width() >= 1200){
-			if ($('.streamer-list').width() < 100){
-				fullOrMinStreams();
-			}
-		}
-	}
-
-
+		adjustSidebar();
 });
 	$('#stream-filter').keyup(function(){
 		// Put Filter Function here
@@ -407,11 +392,30 @@ $(document).ready(function() {
 	});
 });
 
+
+function adjustSidebar(){
+		// If window is small and sidebar is big, trigger
+		if (!state.toggleOverride){
+			if ($(window).width() < 1200){
+				if ($('.streamer-list').width() > 100){
+					fullOrMinStreams();
+				}
+			}
+		//if window is big and sidebar is small, trigger
+
+		if ($(window).width() >= 1200){
+			if ($('.streamer-list').width() < 100){
+				fullOrMinStreams();
+			}
+		}
+	}
+}
+
 function fullOrMinStreams(){
 	var widthChange = 0;
 	var list = $('.streamer-list');
 	if (list.width() === dimension.streamBoxWidth){
-		widthChange = 65;
+		widthChange = 63;
 		if (!list.is(':animated')){
 			$('.streamer-list').animate({
 				width: widthChange,
