@@ -186,6 +186,10 @@ function addStreamerImage(streamObj){
 	var id = "#" + streamObj.logoid;
 	var url = "url(" + streamObj.logo + ")";
 	$(id).css("background-image", url);
+	if (!streamObj.online)
+		{
+			$(id).addClass("grayscale")
+		}
 }
 
 function loadFirstStream(streamObj){
@@ -248,18 +252,19 @@ function resetDivWidth(){
 		var padding = 50;
 		var computedWidth = wrapper - chat - sidebar - padding;
 		var computedHeight = Math.floor(computedWidth * 0.61);
+		/*
 		var flashplayer = $('#live_embed_player_flash')
 		if (flashplayer.length){
 			var embedHeight = flashplayer.position().top;
 
 		}
-
+		*/
 		if (computedWidth > 500){
 			$('#stream-area').width(computedWidth);
 			$('#stream-area').height(computedHeight);
-			$('#stream-chat-area').height(computedHeight);
+			//$('#stream-chat-area').height(computedHeight);
 			//Adjust Margin-top to the new height of the stream
-			$('#stream-chat-area').css("margin-top", embedHeight);
+			//$('#stream-chat-area').css("margin-top", embedHeight);
 		}
 
 	}
