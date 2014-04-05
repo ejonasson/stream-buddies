@@ -152,6 +152,7 @@ footer{
 // The Header
 .header-fixed{
 	width: 100%;
+	min-width: 1000px;
 	margin-right: 0px;
 	height: 53px;
 	background-color: @background-color;
@@ -199,7 +200,8 @@ footer{
 	position:absolute;
 	top: 0;
 	right: 0;
-	padding-top: 4px;}
+	padding-top: 4px;
+}
 
 //Self-Contained Elements
 
@@ -308,4 +310,20 @@ footer{
 
 .modal-content{
 	background-color: @stream-idle;
+}
+
+.find-button{
+		@media screen and (max-width: 1000px)
+	{
+		display: none !important;
+	}
+
+}
+
+.form-box{
+	@media screen and (max-width: 875px)
+	{
+		display: none !important;
+	}
+
 }
