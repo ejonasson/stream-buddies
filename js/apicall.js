@@ -3,7 +3,7 @@ var state = {
 	showingStream : false,
 	toggleOverride : false,
 	haveName : false
-	};
+};
 
 // Global Variable Declarations
 var loadedStreams = [];
@@ -17,7 +17,7 @@ var streamUrl = theURL + "streams/";
 var dimension = {
 	streamBoxWidth : 315,
 	streamChatWidth : 270
-	};
+};
 
 
 
@@ -225,21 +225,18 @@ for (var i in loadedStreams){
 
 //Trigger if we fail to find streams
 function noStreams(){
-	if (state.haveName){
-
 	if (!state.showingStream){
-		if (loadedStreams.length > 0){
-			$('#header-message').html(error.notFound);
+		if(state.haveName){
+			if (loadedStreams.length > 0){
+				$('#header-message').html(error.notFound);
+			}
+			else{
+				$('#header-message').html(error.twitchError);
+			}	
 		}
 		else{
-			$('#header-message').html(error.twitchError);
-
+			$('#header-message').html(error.enterStream);
 		}
-	}
-
-	}
-	else{
-		$('#header-message').html(error.enterStream);
 	}
 }
 
@@ -250,12 +247,13 @@ function resetDivWidth(){
 	var padding = 50;
 	var computedWidth = wrapper - chat - sidebar - padding;
 	var computedHeight = Math.floor(computedWidth * 0.61);
-	//var embedHeight = $('#flash-header').offset().top;
+	var embedHeight = $('#live_embed_player_flash').position.top;
+	console.log(embedHeight);
 	$('#stream-area').width(computedWidth);
 	$('#stream-area').height(computedHeight);
 	$('#stream-chat-area').height(computedHeight);
 	//Adjust Margin-top to the new height of the stream
-	//$('#stream-chat-area').css("margin-top", embedHeight);
+	$('#stream-chat-area').css("margin-top", embedHeight);
 }
 
 // OTHER FUNCTIONS
@@ -368,7 +366,7 @@ $(document).ready(function() {
 				var thisChannelID = "#" + loadedStreams[j]['channelName'];
 				$(thisChannelID).hide();
 			}
-			}
+		}
 	});
 	//Toggle chat
 	$(document).on('click', '#chat-toggle', function(){
