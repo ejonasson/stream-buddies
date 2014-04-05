@@ -241,20 +241,30 @@ function noStreams(){
 }
 
 function resetDivWidth(){
-	var sidebar = $('#streamer-list').width();
-	var chat = $('#stream-chat-area').width();
-	var wrapper = $('.wrapper').width();
-	var padding = 50;
-	var computedWidth = wrapper - chat - sidebar - padding;
-	var computedHeight = Math.floor(computedWidth * 0.61);
-	var embedHeight = $('#live_embed_player_flash').position.top;
-	console.log(embedHeight);
-	$('#stream-area').width(computedWidth);
-	$('#stream-area').height(computedHeight);
-	$('#stream-chat-area').height(computedHeight);
-	//Adjust Margin-top to the new height of the stream
-	$('#stream-chat-area').css("margin-top", embedHeight);
+	if (loadedStreams){
+		var sidebar = $('#streamer-list').width();
+		var chat = $('#stream-chat-area').width();
+		var wrapper = $('.wrapper').width();
+		var padding = 50;
+		var computedWidth = wrapper - chat - sidebar - padding;
+		var computedHeight = Math.floor(computedWidth * 0.61);
+		var flashplayer = $('#live_embed_player_flash')
+		if (flashplayer.length){
+			var embedHeight = flashplayer.position().top;
+
+		}
+
+		if (computedWidth > 500){
+			$('#stream-area').width(computedWidth);
+			$('#stream-area').height(computedHeight);
+			$('#stream-chat-area').height(computedHeight);
+			//Adjust Margin-top to the new height of the stream
+			$('#stream-chat-area').css("margin-top", embedHeight);
+		}
+
+	}
 }
+
 
 // OTHER FUNCTIONS
 
@@ -327,6 +337,8 @@ $(document).ready(function() {
 		$(this).addClass("selected-stream");
 		var streamerID = this.getAttribute('id');
 		changeStream(streamerID);
+		resetDivWidth();
+
 	});
 	resetDivWidth();
 	$(window).resize(function(){
@@ -385,6 +397,8 @@ $(document).ready(function() {
 	$(document).on('click', '.show-hide-streams', function(){
 		state.toggleOverride = true;
 		fullOrMinStreams();
+		resetDivWidth();
+
 	});
 });
 
