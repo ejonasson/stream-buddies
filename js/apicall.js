@@ -337,7 +337,7 @@ $(document).ready(function() {
 	setTimeout(loadStreamFromObject, 700);
 	setInterval(loadStreamFromObject, 1200);
 	setInterval(refreshStreamData, 100000);
-	setTimeout(noStreams, 1300);
+	setTimeout(noStreams, 2500);
 	$(document).on('click', '.streamer', function(){
 		$('.selected-stream').removeClass('selected-stream');
 		$(this).addClass("selected-stream");
