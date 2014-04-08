@@ -1,9 +1,9 @@
 <?php
-//	define('__ROOT__', dirname(dirname(__FILE__)));
+	define('__ROOT__', dirname(dirname(__FILE__)));
 
-//	require_once 'templates/head.php';
-//	require_once 'templates/streams.php';
-//	require_once 'templates/footer.php';
+	 //require_once (__ROOT__ . '/stream-buddies/templates/head.php');
+	//require_once (__ROOT__ . '/stream-buddies/templates/streams.php');
+	//require_once (__ROOT__ . '/stream-buddies/templates/footer.php');
 
 function get_url_contents($url){
     $crl = curl_init();
@@ -16,8 +16,8 @@ function get_url_contents($url){
     return $ret;
 }
 
-
-  $streams = json_decode(get_url_contents("https://api.twitch.tv/kraken/channels/spartanERK/follows"));
+  $user = "spartanERK";
+  $streams = json_decode(get_url_contents("https://api.twitch.tv/kraken/users/" . $user . "/follows/channels"));
   var_dump($streams);
 
 ?>
