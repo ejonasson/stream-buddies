@@ -49,7 +49,7 @@
 @gap-from-header-to-stream: 82px;
 
 // BASE HTML ELEMENTS
-
+//------------------------------------------------------------------
 html{
 	height: 100%;
 }
@@ -82,6 +82,7 @@ footer{
 	bottom: 0px;
 }
 // CONTAINER CLASSES
+//------------------------------------------------------------------
 
 .row {
 	vertical-align: top;
@@ -112,7 +113,6 @@ footer{
 
 // Core List of Streamers
 .streamer-list{
-	//fix scrolling issue
 	position: relative;
 	z-index: 50;
 	display: inline-block;
@@ -120,7 +120,6 @@ footer{
 	top:0px;
 	height: 100%;
 	background-color: @background-color;
-	//.background-image(linear-gradient(top, @twitch-dark-grey 0%, #0e0e0e 100%));	
 	vertical-align: top;
 	padding: 0px 0px 50px 0px;
 	width: @streamer-button-width;
@@ -163,6 +162,7 @@ footer{
 }
 
 // Sub-Containers
+//------------------------------------------------------------------
 
 
 //Stream List Area
@@ -205,6 +205,26 @@ footer{
 	right: 0;
 	padding-top: 4px;
 }
+
+
+.hide-small{
+	@media screen and (max-width: 875px)
+	{
+		display: none !important;
+	}
+
+}
+
+.modal-body{
+	p{
+		font-size: 18px;
+	}
+}
+
+.modal-content{
+	background-color: @stream-idle;
+}
+//------------------------------------------------------------------
 
 //Self-Contained Elements
 
@@ -301,19 +321,7 @@ footer{
 	vertical-align: text-top;
 }
 
-// Modal
 
-.modal-body{
-	p{
-		font-size: 18px;
-	}
-}
-
-
-
-.modal-content{
-	background-color: @stream-idle;
-}
 
 .find-button{
 		@media screen and (max-width: 1000px)
@@ -323,15 +331,6 @@ footer{
 
 }
 
-
-
-.hide-small{
-	@media screen and (max-width: 875px)
-	{
-		display: none !important;
-	}
-
-}
 
 .navbar-form{
 	padding-top: 0px;
