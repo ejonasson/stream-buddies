@@ -39,7 +39,7 @@
 			</script>
 			<!-- Template for Chat embed -->
 			<script type="text/template" id = "stream-chat-embed">
-			<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel={{channelName}}&popout_chat=true" style = "height:100%; width: 270px;"></iframe>
+			<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel={{channelName}}&popout_chat=true" style = "height:100%; width: 100%;"></iframe>
 			</script>
 
 

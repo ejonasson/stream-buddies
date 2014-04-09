@@ -30,7 +30,7 @@
 			<h1 class = "title">StreamBuddies    <small>Always Know Who's On</small></h1>
 			<div class="searchbox pull-right">
 				<form class="navbar-form" action="" method="get" role="search">
-					<div class="form-group hide-small">
+					<div class="form-group">
 						<input type="text" class="form-control form-box" name="name" placeholder="Find Twitch Name">
 						<button type="submit" class="btn btn-default find-button">Find</button>
 

@@ -16,7 +16,7 @@ var streamUrl = theURL + "streams/";
 // Specific DOM Element Dimensions used in Script
 var dimension = {
 	streamBoxWidth : 315,
-	streamChatWidth : 270
+	streamChatWidth : 325
 };
 
 
@@ -188,7 +188,7 @@ function addStreamerImage(streamObj){
 	$(id).css("background-image", url);
 	if (!streamObj.online)
 		{
-			$(id).addClass("grayscale")
+			$(id).addClass("grayscale");
 		}
 }
 
@@ -237,7 +237,7 @@ function noStreams(){
 			}
 			else{
 				$('#header-message').html(error.twitchError);
-			}	
+			}
 		}
 		else{
 			$('#header-message').html(error.enterStream);
@@ -319,8 +319,8 @@ function readCookie(name) {
 	var ca = document.cookie.split(';');
 	for(var i=0;i < ca.length;i++) {
 		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		while (c.charAt(0)===' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
 	}
 	return null;
 }
