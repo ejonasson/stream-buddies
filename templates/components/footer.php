@@ -61,9 +61,13 @@
 			<script type="text/javascript" src="/js/modal.js"></script>	
 			<script type="text/javascript" src="/js/handlebars-v1.3.0.js"></script>	
 			<script type="text/javascript" src="/js/main.min.js"></script>	
-<?php if ($view == "recommendpage"){
-		echo '<script type = "text/javascript" src = "/js/recommendations.js"></script>';
-}
-?>
+			<?php if ($view == "recommendpage"){
+					echo '<script type = "text/javascript" src = "/js/recommendations.js"></script>';
+			}
+			?>
+			<?php if ($view == "streampage"){
+					echo '<script type = "text/javascript" src = "/js/streams.js"></script>';
+			}
+			?>
 		</body>
 		</html>
