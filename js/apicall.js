@@ -19,10 +19,6 @@ var dimension = {
 	streamChatWidth : 325
 };
 
-
-
-
-
 // Error message strings
 var error = {
 	notFound : "No Online Streams were found.",
@@ -32,10 +28,10 @@ var error = {
 };
 
 //AJAX FUNCTIONS
-function queryTwitch(){
+function queryTwitch(queryUrl, successfunction, failfunction){
 	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(status) {
 		$.ajax({
-			url: followsUrl,
+			url: queryUrl,
 			type: 'GET',
 			contentType: 'application/json',
 			dataType: 'jsonp',
@@ -44,18 +40,33 @@ function queryTwitch(){
 			},
 			success: function(data) {
 				if(data.status === 404){
-					$('#header-message').html(error.invalidUser);
-					//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
-					state.showingStream = true;
-					return false;
+					failfunction();
 				}
-				useStreams(data);
-
+				else{
+					successfunction(data);
+				}
+				
 			},
 
 		});
 	});
 }
+
+function returned404()
+{
+	$('#header-message').html(error.invalidUser);
+	//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
+	state.showingStream = true;
+	return false;
+}
+function passToShowOnline(data){
+	var follows = data.follows;
+	for (var i in follows){
+	var streamArray = follows[i].channel;
+	showOnline(streamArray);
+	}
+}
+
 
 function showOnline(streamArray){
 	var name = streamArray.name;
@@ -187,9 +198,9 @@ function addStreamerImage(streamObj){
 	var url = "url(" + streamObj.logo + ")";
 	$(id).css("background-image", url);
 	if (!streamObj.online)
-		{
-			$(id).addClass("grayscale");
-		}
+	{
+		$(id).addClass("grayscale");
+	}
 }
 
 function loadFirstStream(streamObj){
@@ -253,20 +264,10 @@ function resetDivWidth(){
 		var padding = 50;
 		var computedWidth = wrapper - chat - sidebar - padding;
 		var computedHeight = Math.floor(computedWidth * 0.61);
-		/*
-		var flashplayer = $('#live_embed_player_flash')
-		if (flashplayer.length){
-			var embedHeight = flashplayer.position().top;
-
-		}
-		*/
 		if (computedWidth > 600){
 			$('#stream-area').width(computedWidth);
 			$('#stream-area').height(computedHeight);
-			//$('#stream-chat-area').height(computedHeight);
-			//Adjust Margin-top to the new height of the stream
-			//$('#stream-chat-area').css("margin-top", embedHeight);
-	}
+		}
 
 	}
 }
@@ -295,8 +296,8 @@ function findUser(){
 		return queryname;
 	}
 	else if (readCookie("name")){
-	queryname = readCookie("name");
-	return queryname;
+		queryname = readCookie("name");
+		return queryname;
 	}
 	$('#user-find').modal();
 	return false;
@@ -325,15 +326,6 @@ function readCookie(name) {
 	return null;
 }
 
-//Function to call the API based on other input data
-function useStreams(followedStream){
-	var follows = followedStream.follows;
-	for (var i in follows){
-		var streamArray = follows[i].channel;
-		showOnline(streamArray);
-	}
-}
-
 
 // Make sure viewer count is appropriately singular or plural
 function viewerCount(data){
@@ -352,73 +344,57 @@ function viewerCount(data){
 	return null;
 }
 
-// The Document.Ready (aka what actually runs)
+function loadIntervals(first, interval, timeout, query){
+	//enter values as seconds, turn into milliseconds
+	first = first * 1000;
+	interval = interval * 1000;
+	timeout = timeout * 1000;
+	query = query * 1000;
+	setInterval(queryTwitch, query);
+	setTimeout(loadStreamFromObject, first);
+	setInterval(loadStreamFromObject, interval);
+	setInterval(refreshStreamData, interval);
+	setTimeout(noStreams, timeout);
+}
 
-$(document).ready(function() {
-	
-
-	//Currently only adds, need a good way to subtract
-	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
-	queryTwitch();
-	setInterval(queryTwitch, 100000);
-	setTimeout(loadStreamFromObject, 700);
-	setInterval(loadStreamFromObject, 1200);
-	setInterval(refreshStreamData, 100000);
-	setTimeout(noStreams, 2500);
-	$(document).on('click', '.streamer', function(){
-		$('.selected-stream').removeClass('selected-stream');
-		$(this).addClass("selected-stream");
-		var streamerID = this.getAttribute('id');
-		changeStream(streamerID);
-		resetDivWidth();
-
-	});
+function selectStreamer(){
+	$('.selected-stream').removeClass('selected-stream');
+	$(this).addClass("selected-stream");
+	var streamerID = this.getAttribute('id');
+	changeStream(streamerID);
 	resetDivWidth();
-	$(window).resize(function(){
-		resetDivWidth();
-		adjustSidebar();
-});
-	$('#stream-filter').keyup(function(){
-		// Put Filter Function here
-
-		var filterBox = $('#stream-filter').val();
-		var expression = filterBox;
-		var regFilter = new RegExp(expression, 'i');
-		for (var i in loadedStreams){
-			var channelID = "#" + loadedStreams[i]['channelName'];
-			$(channelID).show();
+}
+function filterStream(){
+	var filterBox = $('#stream-filter').val();
+	var expression = filterBox;
+	var regFilter = new RegExp(expression, 'i');
+	for (var i in loadedStreams){
+		var channelID = "#" + loadedStreams[i]['channelName'];
+		$(channelID).show();
+	}
+	for (var j in loadedStreams){
+		var stream = loadedStreams[j];
+		if (!regFilter.test(stream.channelName) && (!regFilter.test(stream.status)))
+		{
+			var thisChannelID = "#" + loadedStreams[j]['channelName'];
+			$(thisChannelID).hide();
 		}
-		for (var j in loadedStreams){
-			var stream = loadedStreams[j];
-			if (!regFilter.test(stream.channelName) && (!regFilter.test(stream.status)))
-			{
-				var thisChannelID = "#" + loadedStreams[j]['channelName'];
-				$(thisChannelID).hide();
-			}
-		}
-	});
-	//Toggle chat
-	$(document).on('click', '#chat-toggle', function(){
-		var chat = $('#stream-chat-area');
-		if (chat.width() === dimension.streamChatWidth){
-			chat.width(0);
-			chat.css('display', 'none');
-		}
-		else {
-			chat.width(dimension.streamChatWidth);
-			chat.css('display', 'inline-block');
+	}
+}
 
-		}
-		resetDivWidth();
-	});
-	$(document).on('click', '.show-hide-streams', function(){
-		state.toggleOverride = true;
-		fullOrMinStreams();
-		resetDivWidth();
+function chatToggleclicked(){
+	var chat = $('#stream-chat-area');
+	if (chat.width() === dimension.streamChatWidth){
+		chat.width(0);
+		chat.css('display', 'none');
+	}
+	else {
+		chat.width(dimension.streamChatWidth);
+		chat.css('display', 'inline-block');
 
-	});
-});
-
+	}
+	resetDivWidth();
+}
 
 function adjustSidebar(){
 		// If window is small and sidebar is big, trigger
@@ -472,6 +448,34 @@ function fullOrMinStreams(){
 	}
 }
 
+// The Document.Ready (aka what actually runs)
+
+$(document).ready(function() {
+	queryTwitch(followsUrl, passToShowOnline, returned404);
+	loadIntervals(0.5, 1, 3, 60);
+	resetDivWidth();
+	$(document).on('click', '.streamer', function(){
+		selectStreamer();
+	});
+	$(window).resize(function(){
+		resetDivWidth();
+		adjustSidebar();
+	});
+	$('#stream-filter').keyup(function(){
+		// Put Filter Function here
+		filterStream();
+	});
+	//Toggle chat
+	$(document).on('click', '#chat-toggle', function(){
+		chatToggleclicked();
+	});
+	$(document).on('click', '.show-hide-streams', function(){
+		state.toggleOverride = true;
+		fullOrMinStreams();
+		resetDivWidth();
+
+	});
+});
 
 //Keep incomplete functions down here
 

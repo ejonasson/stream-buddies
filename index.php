@@ -18,4 +18,5 @@ function get_url_contents($url){
 // $streams = json_decode(get_url_contents("https://api.twitch.tv/kraken/users/" . $user . "/follows/channels"));
 //  var_dump($streams);
 
-?>
+
+?> 

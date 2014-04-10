@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS streambuddies;
+CREATE TABLE IF NOT EXISTS streambuddies.buddies
+(
+	buddyID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userName VARCHAR(64),
+	
+
+
+);
