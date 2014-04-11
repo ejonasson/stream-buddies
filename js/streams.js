@@ -29,33 +29,6 @@ function loadStreamFromObject() {
 }
 
 
-function returned404()
-{
-	$('#header-message').html(error.invalidUser);
-	//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
-	state.showingStream = true;
-	return false;
-}
-
-
-
-function resetChanged(streamObj){
-//Reset if online has changed
-if (loadedStreams[i].online !== streamObj.online)
-{
-	$(thisStreamID).remove();
-	streamObj.already_loaded = false;
-	loadedStreams[i] = streamObj;
-
-}
-else{
-	streamObj.already_loaded = true;
-	loadedStreams[i] = streamObj;
-}
-}
-
-
-
 function sortLoaded(a, b){
 	if (a.viewers === b.viewers){
 		return 0;
@@ -113,16 +86,16 @@ function changeStream(streamer){
 	var template = Handlebars.compile(source);
 	var chatSource = $("#stream-chat-embed").html();
 	var chatTemplate = Handlebars.compile(chatSource);
-// Get loaded stream object
-for (var i in loadedStreams){
-	if (loadedStreams[i]['channelName'] === streamer){
-		var streamObj = loadedStreams[i];
-		$('#stream-area').html(template(streamObj));
-		$('#stream-chat-area').html(chatTemplate(streamObj));
-		resetDivWidth();
-		adjustSidebar();
+	// Get loaded stream object
+	for (var i in loadedStreams){
+		if (loadedStreams[i]['channelName'] === streamer){
+			var streamObj = loadedStreams[i];
+			$('#stream-area').html(template(streamObj));
+			$('#stream-chat-area').html(chatTemplate(streamObj));
+			resetDivWidth();
+			adjustSidebar();
+		}
 	}
-}
 }
 
 //Trigger if we fail to find streams
@@ -172,13 +145,6 @@ function loadIntervals(first, interval, timeout, query){
 	setTimeout(noStreams, timeout);
 }
 
-function selectStreamer(){
-	$('.selected-stream').removeClass('selected-stream');
-	$(this).addClass("selected-stream");
-	var streamerID = this.getAttribute('id');
-	changeStream(streamerID);
-	resetDivWidth();
-}
 function filterStream(){
 	var filterBox = $('#stream-filter').val();
 	var expression = filterBox;
@@ -270,8 +236,11 @@ $(document).ready(function() {
 	loadIntervals(0.5, 1, 3, 60);
 	resetDivWidth();
 	$(document).on('click', '.streamer', function(){
-		selectStreamer();
-	});
+		$('.selected-stream').removeClass('selected-stream');
+		$(this).addClass("selected-stream");
+		var streamerID = this.getAttribute('id');
+		changeStream(streamerID);
+		resetDivWidth();	});
 	$(window).resize(function(){
 		resetDivWidth();
 		adjustSidebar();

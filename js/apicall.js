@@ -19,6 +19,7 @@ var dimension = {
 	streamChatWidth : 325
 };
 
+
 // Error message strings
 var error = {
 	notFound : "No Online Streams were found.",
@@ -52,9 +53,7 @@ function queryTwitch(queryUrl, successfunction, failfunction){
 	});
 }
 
-
 //intermediary for sending follows data to push streams
-
 function followsToPushStreams(data){
 	var follows = data.follows;
 	for (var i in follows){
@@ -63,6 +62,29 @@ function followsToPushStreams(data){
 	}
 }
 
+
+function resetChanged(streamObj){
+	//Reset if online has changed
+	if (loadedStreams[i].online !== streamObj.online)
+	{
+		$(thisStreamID).remove();
+		streamObj.already_loaded = false;
+		loadedStreams[i] = streamObj;
+
+	}
+	else{
+		streamObj.already_loaded = true;
+		loadedStreams[i] = streamObj;
+	}
+}
+
+function returned404()
+{
+	$('#header-message').html(error.invalidUser);
+	//Okay, we're technically not showing a stream, but this keeps the other error texts from firing.
+	state.showingStream = true;
+	return false;
+}
 
 function pushStreams(streamArray, updateChanged){
 	var name = streamArray.name;
@@ -108,8 +130,6 @@ function pushStreams(streamArray, updateChanged){
 	});
 }
 
-
-
 // turn undefineds into zeroes
 
 function removeBadData(data){
@@ -118,15 +138,6 @@ function removeBadData(data){
 	}
 	return data.viewers;
 }
-
-// DOM MANIPULATION FUNCTIONS
-
-
-
-
-
-
-
 
 // OTHER FUNCTIONS
 
@@ -161,12 +172,13 @@ function findUser(){
 // I didn't create these functions
 
 function createCookie(name,value,days) {
+	var expires = "";
 	if (days) {
 		var date = new Date();
 		date.setTime(date.getTime()+(days*24*60*60*1000));
-		var expires = "; expires="+date.toGMTString();
+		expires = "; expires="+date.toGMTString();
 	}
-	else var expires = "";
+	else expires = "";
 	document.cookie = name+"="+value+expires+"; path=/";
 }
 
