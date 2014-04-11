@@ -1,4 +1,4 @@
-var recommended = {};
+var recommended = [];
 $(document).ready(function() {
 //get twitch follows
 queryTwitch(followsUrl, secondFollows, returned404);
@@ -23,41 +23,49 @@ function loadFollowers(data){
 	for (var i in follower){
 		var thisFollower = follower[i].user.name;
 		var followerURL = theURL + "users/" + thisFollower + "/follows/channels?limit=10";
-			queryTwitch (followerURL, recommendations, returned404);
+		queryTwitch (followerURL, recommendations, returned404);
 	}
 }
-
+// This seems to crash everything
 // 3. Find and total up this sample's list of follows
 function recommendations(data){
-	var stream = [];
 	var follows = data.follows;
 	for (var i in follows){
 		var streamArray = follows[i].channel;
-		console.log(streamArray);
-		for (var j in recommended){
-			if (recommended[j] === streamArray){
-				recommended[j].count++;
-			}
-			else {
-				stream = {
-					channelName : streamArray.name,
-					game        : streamArray.game,
-					status      : streamArray.status,
-					logo        : streamArray.logo,
-					logoid      : streamArray.name + "-logo",
-					display_name : streamArray.display_name,
-					online       : false,
-					already_loaded : false,
-					metaID       : streamArray.name + "-meta",
-					count        : 1
-				};
-				recommended.push(streamArray);
+		if (recommended.length > 0){
+			for (var j in recommended){
+				if (recommended[j].channelName === streamArray.name){
+					recommended[j].count++;
+				}
+				else {
+					addRecommendation(streamArray);
+				}
 			}
 		}
+		else{
+			addRecommendation(streamArray);
+		}
+		
 	}
 	console.log(recommended);
 }
 
+function addRecommendation(streamArray){
+	var stream = {
+		channelName : streamArray.name,
+		game        : streamArray.game,
+		status      : streamArray.status,
+		logo        : streamArray.logo,
+		logoid      : streamArray.name + "-logo",
+		display_name : streamArray.display_name,
+		online       : false,
+		already_loaded : false,
+		metaID       : streamArray.name + "-meta",
+		count        : 1
+	};
+	console.log(stream);
+	recommended.push(stream);
+}
 
 // 4. Find the top 3 overall recommendations - check against loadedstreams (have to build that too)
 
