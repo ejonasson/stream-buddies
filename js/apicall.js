@@ -29,7 +29,7 @@ var error = {
 };
 
 //AJAX FUNCTIONS
-function queryTwitch(queryUrl, successfunction, failfunction){
+function queryTwitch(queryUrl, successfunction, failfunction, completefunction){
 	Twitch.init({clientId: 'cbmag59uju3vb9fevpi2de3pank5wtg'}, function(status) {
 		$.ajax({
 			url: queryUrl,
@@ -48,6 +48,11 @@ function queryTwitch(queryUrl, successfunction, failfunction){
 				}
 				
 			},
+			complete: function(data) {
+					if (completefunction){
+						completefunction(data);
+					}
+				}
 
 		});
 	});

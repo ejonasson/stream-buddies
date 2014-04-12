@@ -60,8 +60,8 @@
 			<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>	
 			<script type="text/javascript" src="/js/modal.js"></script>	
 			<script type="text/javascript" src="/js/handlebars-v1.3.0.js"></script>	
-			<script type="text/javascript" src="/js/main.min.js"></script>	
-			<?php if ($view == "recommendpage"){
+			<script type="text/javascript" src="/js/apicall.js"></script>	
+			<?php if ($view == "recommendpageNOPE"){
 					echo '<script type = "text/javascript" src = "/js/recommendations.js"></script>';
 			}
 			?>
