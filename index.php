@@ -1,6 +1,7 @@
 <?php
-	define('__ROOT__', dirname(dirname(__FILE__)));
-  require_once (__ROOT__ . '/www/templates/views/streampage.php');
+echo dirname(__FILE__);
+	define('__ROOT__', dirname(__FILE__));
+  require_once (__ROOT__ . '/templates/views/streampage.php');
 
 
 function get_url_contents($url){
