@@ -3,6 +3,9 @@
 Stream buddies is a website that makes it easy for you to share who you're following on Twitch with your friends. Simply follow people you like on Twitch and they'll show up on your customized StreamBuddies page.
 
 ## Current Status:
+
+**Note that work on this project has (temporarily) been moved to a private repository. If you're looking for the most recent code, contact [SpartanERK](http://twitter.com/spartanERK) on Twitter.**
+
 Soft Launch Development. Features core to the basic functionality of the site are complete, but not refined.
 
 ## Current Features
