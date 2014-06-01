@@ -26,7 +26,7 @@ var dimension = {
 // Error message strings
 var error = {
 	notFound : "No Online Streams were found.",
-	twitchError : "Twitch is taking longer than expected to respond. Try refreshing your browser.",
+	twitchError : "<img src='/assets/img/ajax-loader.gif' />Twitch is taking longer than expected to respond. If this problem persists, try refreshing your browser.",
 	invalidUser : "Error: We could not find a Twitch account by that name. Please check to make sure the name is spelled correctly.",
 	enterStream : "Enter a Twitch ID to Get Started"
 };
@@ -293,6 +293,7 @@ function findUser(){
 		state.haveName = true;
 		return queryname;
 	}
+    $('#header-message').html("Enter a Twitch name to get started");
 	$('#user-find').modal();
 	return false;
 
@@ -332,8 +333,11 @@ $(document).ready(function() {
 
 	//Currently only adds, need a good way to subtract
 	//Maybe compare stream objects to loaded streams and find who's loaded but not in objects
+   
+
 	queryTwitch();
-	setInterval(queryTwitch, 100000);
+
+    setInterval(queryTwitch, 100000);
 	setTimeout(loadStreamFromObject, 700);
 	setInterval(loadStreamFromObject, 1200);
 	setInterval(refreshStreamData, 100000);
